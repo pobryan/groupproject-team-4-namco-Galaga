@@ -12,5 +12,3 @@ public enum enemyType {
 		return "n/a";
 	}
 }
-
-//comment
