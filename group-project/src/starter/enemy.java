@@ -5,10 +5,11 @@ public class enemy {
 	private space start;
 	double speed;
 	
-	enemy(int x, int y, double speed) {
+	enemy(int x, int y, double speed, enemyType type) {
 		start.setX(x);
 		start.setY(y);
 		this.speed=speed;
+		eType=type;
 	}
 	
 	//TODO: Finish this method. This method should check if the enemy was hit.
