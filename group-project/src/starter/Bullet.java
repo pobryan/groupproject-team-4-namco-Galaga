@@ -13,6 +13,7 @@ public class Bullet extends GraphicsProgram{
 	private double speed;
 	private GRect bullet;
 	
+	
 	public GRect makeBullet(double x, double y) {
 		GRect tempBullet = new GRect(x-WIDTH/2, y-HEIGHT/2, WIDTH, HEIGHT);
 		tempBullet.setColor(Color.ORANGE);
