@@ -13,7 +13,7 @@ import javax.swing.Timer;
 
 public class KeyboardInput extends JPanel implements ActionListener, KeyListener{
 	Bullet b= new Bullet();
-	public static final int WINDOW_HEIGHT = 520;
+	public static final int WINDOW_HEIGHT = 550;
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 15;
