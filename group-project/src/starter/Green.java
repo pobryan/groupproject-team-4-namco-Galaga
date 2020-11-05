@@ -1,5 +1,5 @@
 package starter;
 
-public class Green {
-
+public class Green extends enemy{
+	
 }
