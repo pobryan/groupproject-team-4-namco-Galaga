@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -20,34 +21,32 @@ public class KeyboardInput extends JPanel implements ActionListener, KeyListener
 	public static final int MS = 50;
 	
 	int x=400,y=520, velx=0,vely=-2;
-	private Timer move;
+	private Timer move= new Timer(MS,this);
 	
-	public KeyboardInput() {
-		addKeyListener(this);
-		setFocusable(true);
-		setFocusTraversalKeysEnabled(false);
-		move=new Timer(MS,this);
-//		move.start();
-	}
+	Graphics g;
+	Graphics2D g2 = (Graphics2D) g;
+	ArrayList<Graphics2D> bullets= new ArrayList<Graphics2D>();
 	
 	public void paintComponent(Graphics g) {
-		super.paintComponents(g);
-		Graphics2D g2=(Graphics2D) g;
-		g.setColor(Color.orange);
-		g.fillRect(x, y, WIDTH, HEIGHT);
+		super.paintComponent(g);
+		Graphics2D tempg2 = (Graphics2D) g;
+		tempg2.setColor(Color.orange);
+		tempg2.fillRect(x, y, WIDTH, HEIGHT);
 		setBackground(Color.black);
+		move.start();
+		bullets.add(tempg2);
 	}
 	
-	public void spacebar(int m) {
-		repaint();
-//		b.addBullet(m);
+	public void spacebar() {
+		g2.create(x, y, WIDTH, HEIGHT);
+		paintComponent(g2);
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 		
 		if(code == KeyEvent.VK_SPACE) {
-			spacebar(400);
+			spacebar();
 		}
 	}
 
@@ -57,9 +56,7 @@ public class KeyboardInput extends JPanel implements ActionListener, KeyListener
 	
 	public void actionPerformed(ActionEvent e) {
 		y+=vely;
-//		b.moveAllBullets();
-//		repaint();
-		
+		repaint();
 	}
 	
 }
