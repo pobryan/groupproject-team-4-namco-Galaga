@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import javax.swing.Timer;
-
 import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
+
+import java.awt.*;
+import javax.swing.*;
 
 public class Bullet extends GraphicsProgram{
 	public static final int WINDOW_HEIGHT = 600;
@@ -18,13 +19,13 @@ public class Bullet extends GraphicsProgram{
 	public static final int MS = 50;
 	public static final int SPEED=-4;
 	
-	private space start;
+	private space start= new space(400,  WINDOW_HEIGHT-10);
 	private double speed;
 	private GRect bullet;
-	private ArrayList<GRect> bullets;
+	private ArrayList<GRect> bullets=new ArrayList<GRect>();
 	ActionListener listen;
 	private Timer movement;
-		
+	
 	//getters
 	public space getStart() {
 		return start;
@@ -44,7 +45,7 @@ public class Bullet extends GraphicsProgram{
 	
 	//methods
 	public GRect makeBullet(double x, double y) {
-		GRect tempBullet = new GRect(x, WINDOW_HEIGHT,WIDTH, HEIGHT);
+		GRect tempBullet = new GRect(x, WINDOW_HEIGHT-10,WIDTH, HEIGHT);
 		tempBullet.setColor(Color.ORANGE);
 		tempBullet.setFilled(true);
 		return tempBullet;
@@ -66,14 +67,26 @@ public class Bullet extends GraphicsProgram{
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	}
 	
+	private void keyInput() {
+		JFrame frame= new JFrame();
+		KeyboardInput k= new KeyboardInput();
+		frame.setBackground(Color.black);
+		frame.add(k);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+				
+	}
+	
 	//event methods
 	public void actionPerformed(ActionEvent e) {
 		moveAllBullets();
 	}
 	
-	public void mousePressed(MouseEvent e) {
-		addBullet(e.getX());
-	}
+//	public void mousePressed(MouseEvent e) {
+//		addBullet(e.getX());
+//		setStart(e.getX(), WINDOW_HEIGHT-10);
+//	}
 	
 	//test code
 	public void run() {
@@ -81,7 +94,8 @@ public class Bullet extends GraphicsProgram{
 		movement=new Timer(MS,this);
 		movement.start();
 		
-		addMouseListeners();
-		
+//		addMouseListeners();
+		keyInput();
 	}
 }
+
