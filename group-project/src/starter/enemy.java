@@ -1,9 +1,22 @@
+
+
 package starter;
 
-public class enemy {
+public class enemy{
+	public static final int ENEMY_WIDTH = 45;
+	public static final int ENEMY_HEIGHT = 45;
+	
 	private enemyType eType;
 	private space start;
 	double speed;
+	boolean alive;
+	
+	enemy(){
+		start.setX(0);
+		start.setY(0);
+		speed = 0;
+		eType = null;
+	}
 	
 	enemy(int x, int y, double speed, enemyType type) {
 		start.setX(x);
