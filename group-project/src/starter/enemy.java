@@ -59,4 +59,5 @@ public class enemy extends GRectangle{
 	public enemyType getEnemyType() {
 		return eType;
 	}
+	
 }

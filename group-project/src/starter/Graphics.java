@@ -32,7 +32,6 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 	public void run() {
 		numTimes = 0;
 		
-		//for this to work, you need to remove the 3rd input in the Fighter constructor(p/position).
 		fighter = new Fighter(PROGRAM_WIDTH/2-ENEMY_WIDTH/2, PROGRAM_HEIGHT-ENEMY_HEIGHT*2, 3);
 		redEnemy = new Red(PROGRAM_WIDTH/2-ENEMY_WIDTH/2, PROGRAM_HEIGHT/2-ENEMY_HEIGHT/2, fighter, 0);
 		

@@ -21,11 +21,15 @@ public class Fighter {
 		position.setY(y);
 	}
 	
-	//Constructor
-	Fighter(int x, int y, space p, int l){
-		position.setX(x);
-		position.setY(y);
-		position = p;
+	//Constructors
+	Fighter(){
+		position = new space(0, 0);
+		lives = 3;
+	}
+	
+	Fighter(int x, int y, /*space p,*/ int l){
+		position = new space(x, y);
+		//position = p;
 		lives = l;
 	}
 	

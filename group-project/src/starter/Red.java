@@ -5,8 +5,7 @@ public class Red extends enemy{
 	private double degToMove;
 	
 	Red(){
-		start.setX(0);
-		start.setY(0);
+		start = new space(0, 0);
 		degToMove = 0;
 	}
 	
@@ -50,4 +49,5 @@ public class Red extends enemy{
 	public double getDeg() {
 		return degToMove;
 	}
+	
 }
