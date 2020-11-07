@@ -2,25 +2,28 @@
 
 package starter;
 
-public class enemy{
+import acm.graphics.GRectangle;
+
+public class enemy extends GRectangle{
 	public static final int ENEMY_WIDTH = 45;
 	public static final int ENEMY_HEIGHT = 45;
 	
-	private enemyType eType;
-	private space start;
+	protected enemyType eType;
+	protected space start;
 	double speed;
 	boolean alive;
+	space spaceToReturn;
+	
+	//true if an enemy is currently moving
+	boolean moving;
 	
 	enemy(){
-		start.setX(0);
-		start.setY(0);
+		start = new space(0, 0);
 		speed = 0;
-		eType = null;
 	}
 	
 	enemy(int x, int y, double speed, enemyType type) {
-		start.setX(x);
-		start.setY(y);
+		start = new space(x, y);
 		this.speed=speed;
 		eType=type;
 	}
@@ -50,5 +53,9 @@ public class enemy{
 	public void setSpace(int x, int y) {
 		start.setX(x);
 		start.setY(y);
+	}
+	
+	public enemyType getEnemyType() {
+		return eType;
 	}
 }
