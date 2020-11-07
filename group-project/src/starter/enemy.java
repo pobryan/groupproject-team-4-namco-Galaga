@@ -12,6 +12,7 @@ public class enemy extends GRectangle{
 	protected space start;
 	double speed;
 	boolean alive;
+	
 	space spaceToReturn;
 	
 	//true if an enemy is currently moving

@@ -38,12 +38,15 @@ public class Red extends enemy{
 	public void setRedTarget(Fighter f) {
 		target = f;
 	}
+	
 	public Fighter getRedTarget() {
 		return target;
 	}
+	
 	public void setDeg(double d) {
 		degToMove = d;
 	}
+	
 	public double getDeg() {
 		return degToMove;
 	}

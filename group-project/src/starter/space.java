@@ -4,6 +4,11 @@ public class space {
 	private int x;
 	private int y;
 	
+	space(){
+		x = 0;
+		y = 0;
+	}
+	
 	public space(int newX, int newY) {
 		x = newX;
 		y = newY;
