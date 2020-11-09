@@ -28,12 +28,12 @@ public class Bullet {
 		this.speed=speed;
 	}
 	
-//getters
+//Getters
 	public space getStart() {
 		return start;
 	}
 	
-//setters
+//Setters
 	public void setStart(int x, int y) {
 		start.setX(x);
 		start.setY(y);
@@ -42,7 +42,7 @@ public class Bullet {
 		this.speed = s;
 	}
 	
-//methods
+//Methods
 	//Makes bullets to add on screen
 	public GRect makeBullet(int x) {
 		GRect tempBullet = new GRect(x, start.getY(),WIDTH, HEIGHT);
