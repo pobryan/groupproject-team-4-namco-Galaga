@@ -1,7 +1,9 @@
 package starter;
 
-public class Fighter {
-	private space position;
+import acm.graphics.GRectangle;
+
+public class Fighter extends GRectangle{
+	//private space position;				We are now inheriting GRectangle.
 	double speed;
 	int lives;
 	Bullet shoot;
@@ -11,24 +13,28 @@ public class Fighter {
 		return lives;
 	}
 	
+	/*
 	public space getPosition() {
 		return position;
-	}
+	}*/
 	
 	//Setters
-	public void setPosition(int x, int y) {
+	/*public void setPosition(int x, int y) {
 		position.setX(x);
 		position.setY(y);
+	}*/
+	public void setLives(int lives) {
+		this.lives = lives;
 	}
 	
 	//Constructors
 	Fighter(){
-		position = new space(0, 0);
+		//position = new space(0, 0);
 		lives = 3;
 	}
 	
-	Fighter(int x, int y, /*space p,*/ int l){
-		position = new space(x, y);
+	Fighter(/*int x, int y, space p,*/ int l){
+		//position = new space(x, y);
 		//position = p;
 		lives = l;
 	}

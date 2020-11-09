@@ -3,16 +3,17 @@ package starter;
 public class Red extends enemy{
 	Fighter target;
 	private double degToMove;
+	//add GImage object
 	
 	Red(){
-		start = new space(0, 0);
+		//start = new space(0, 0);
 		degToMove = 0;
 	}
 	
-	Red(int x, int y, Fighter target, double degToMove){
-		start = new space(x, y);
+	Red(/*int x, int y,*/ Fighter target, double degToMove){
+		//start = new space(x, y);
 		this.target = target;
-		spaceToReturn = start;
+		//spaceToReturn = start;
 		this.degToMove = degToMove;
 	}
 	

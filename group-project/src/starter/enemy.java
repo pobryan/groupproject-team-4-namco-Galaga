@@ -9,7 +9,7 @@ public class enemy extends GRectangle{
 	public static final int ENEMY_HEIGHT = 45;
 	
 	protected enemyType eType;
-	protected space start;
+	//protected space start;				We are inheriting GRectangle now.
 	double speed;
 	boolean alive;
 	
@@ -19,12 +19,12 @@ public class enemy extends GRectangle{
 	boolean moving;
 	
 	enemy(){
-		start = new space(0, 0);
+		//start = new space(0, 0);
 		speed = 0;
 	}
 	
 	enemy(int x, int y, double speed, enemyType type) {
-		start = new space(x, y);
+		//start = new space(x, y);
 		this.speed=speed;
 		eType=type;
 	}
@@ -39,22 +39,24 @@ public class enemy extends GRectangle{
 		
 	}
 	
-	public void move(space s1, space s2) {
+	//We are now inheriting GRectangle, so there is no need for these.
+	
+	/*public void move(space s1, space s2) {
 		int difX=s1.getX()-s2.getX();
 		int difY=s1.getY()-s2.getY();
 		
 		start.setX(start.getX()+difX);
 		start.setY(start.getY()+difY);
-	}
+	}*/
 	
-	public space getSpace() {
+	/*public space getSpace() {
 		return start;
-	}
+	}*/
 	
-	public void setSpace(int x, int y) {
+	/*public void setSpace(int x, int y) {
 		start.setX(x);
 		start.setY(y);
-	}
+	}*/
 	
 	public enemyType getEnemyType() {
 		return eType;
