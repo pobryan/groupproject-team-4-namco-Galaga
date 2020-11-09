@@ -40,20 +40,20 @@ public class Bullet {
 	}
 	public void setSpeed(int s) {
 		this.speed = s;
-	}
+	} 
 	
 //Methods
 	//Makes bullets to add on screen
-	public GRect makeBullet(int x) {
-		GRect tempBullet = new GRect(x, start.getY(),WIDTH, HEIGHT);
+	public GRect makeBullet(int x, int y) {
+		GRect tempBullet = new GRect(x, y,WIDTH, HEIGHT);
 		tempBullet.setColor(Color.ORANGE);
 		tempBullet.setFilled(true);
 		return tempBullet;
 	}
 	
 	//Adds bullets on screen
-	public void addBullet(int x) {
-		bullet= makeBullet(x);
+	public void addBullet(int x, int y) {
+		bullet= makeBullet(x,y);
 		bullets.add(bullet);
 	}
 	
@@ -80,7 +80,6 @@ public class Bullet {
 	}
 	
 	public void run() {
-		start= new space(400,  WINDOW_HEIGHT-10);
 		bullets= new ArrayList<GRect>();
 		movement= new Timer(MS, listener);
 		movement.start();
