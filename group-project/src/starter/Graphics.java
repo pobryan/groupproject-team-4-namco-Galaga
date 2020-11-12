@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-public class Graphics extends GraphicsProgram implements ActionListener{
+public class Graphics extends GraphicsPane{
+	private MainApplication program;
+	
 	public static final int PROGRAM_WIDTH = 800;
 	public static final int PROGRAM_HEIGHT = 600;
 	public static final int ENTITY_WIDTH = 45;
@@ -18,21 +20,16 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 	public static final int ENEMY_SPEED = 4;
 	public static final int DELAY_MS = 25;
 	
-	
-	private int numTimes;
+	private int numTimes=0;
+	private ActionListener listen;
 	
 	//to test
-	private Red redEnemy = new Red();
+	private Red redEnemy;
+	private Fighter fighter;
 	
-	private Fighter fighter = new Fighter();
-	
-	public void init() {
-		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
-	}
-	
-	//Feel free to change this to test what you need to:
-	public void run() {
-		numTimes = 0;
+//Constructor
+	public Graphics(MainApplication app) {
+		this.program=app;
 		
 		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
 		fighter.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
@@ -42,24 +39,34 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 		redEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		redEnemy.getRedEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		
-		//draws the fighter and enemy
-		add(redEnemy.getRedEnemyImage());
-		add(fighter.getFighterImage());
-		drawEnemy(redEnemy);
-		
 		//sets the target and direction for the enemy to travel
 		redEnemy.setRedTarget(fighter);
 		redEnemy.setDeg(calculateDegMove(redEnemy.getRedTarget()));
 		
 		//initializes and starts the timer
-		Timer gameTimer = new Timer(DELAY_MS, this);
+		Timer gameTimer = new Timer(DELAY_MS,listen);
 		gameTimer.start();
+	}
+	
+
+	@Override
+	public void showContents() {
+		// TODO Auto-generated method stub
+		program.add(fighter.getFighterImage());
+		program.add(redEnemy.getRedEnemyImage());
+	}
+
+	@Override
+	public void hideContents() {
+		// TODO Auto-generated method stub
+		program.remove(fighter.getFighterImage());
+		program.remove(redEnemy.getRedEnemyImage());
 	}
 	
 	//Moves the enemy toward the Fighter(temporary)
 	public void actionPerformed(ActionEvent e) {
 		//TODO: Meant to make the enemy start moving once every 2.5(x) seconds.
-		if(numTimes % 100 == 0) {
+		if(numTimes % 2500 == 0) {
 			
 		}
 		

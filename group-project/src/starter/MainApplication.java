@@ -2,12 +2,13 @@ package starter;
 public class MainApplication extends GraphicsApplication {
 	public static final int WINDOW_WIDTH = 800;
 	public static final int WINDOW_HEIGHT = 600;
-	public static final String MUSIC_FOLDER = "sounds";
-	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
+//	public static final String MUSIC_FOLDER = "sounds";
+//	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
-	private SomePane somePane;
+//	private SomePane somePane;
 	private MenuPane menu;
-	private int count;
+//	private int count;
+	private Graphics graphics;
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -15,24 +16,29 @@ public class MainApplication extends GraphicsApplication {
 
 	public void run() {
 		System.out.println("Hello, world!");
-		somePane = new SomePane(this);
+//		somePane = new SomePane(this);
 		menu = new MenuPane(this);
+		graphics=new Graphics(this);
 		switchToMenu();
+	}
+	
+	public void switchToGraphics() {
+		switchToScreen(graphics);
 	}
 
 	public void switchToMenu() {
-		playRandomSound();
-		count++;
+//		playRandomSound();
+//		count++;
 		switchToScreen(menu);
 	}
 
-	public void switchToSome() {
-		playRandomSound();
-		switchToScreen(somePane);
-	}
+//	public void switchToSome() {
+//		playRandomSound();
+//		switchToScreen(somePane);
+//	}
 
-	private void playRandomSound() {
-		AudioPlayer audio = AudioPlayer.getInstance();
-		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
-	}
+//	private void playRandomSound() {
+//		AudioPlayer audio = AudioPlayer.getInstance();
+//		audio.playSound(MUSIC_FOLDER, SOUND_FILES[count % SOUND_FILES.length]);
+//	}
 }
