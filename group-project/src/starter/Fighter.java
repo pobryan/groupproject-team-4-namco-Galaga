@@ -46,15 +46,16 @@ public class Fighter extends GRectangle{
 	Fighter(){
 		//position = new space(0, 0);
 		lives = 3;
+		this.setLocation(0, 0);
 		fighterImage = new GImage("Fighter.png", 0, 0);
 		fighterImage.setLocation(0, 0);
-		
 	}
 	
 	Fighter(int x, int y, /*space p,*/ int l){
 		//position = new space(x, y);
 		//position = p;
 		lives = l;
+		this.setLocation(x, y);
 		fighterImage = new GImage("Fighter.png", x, y);
 	}
 	
