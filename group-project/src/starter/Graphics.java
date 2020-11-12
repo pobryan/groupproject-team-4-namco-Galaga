@@ -9,12 +9,12 @@ import javax.swing.Timer;
 public class Graphics extends GraphicsProgram implements ActionListener{
 	public static final int PROGRAM_WIDTH = 800;
 	public static final int PROGRAM_HEIGHT = 600;
-	public static final int ENEMY_WIDTH = 45;
-	public static final int ENEMY_HEIGHT = 45;
-	public static final int FIGHTER_X = PROGRAM_WIDTH/2-ENEMY_WIDTH/2;
-	public static final int FIGHTER_Y = PROGRAM_HEIGHT-ENEMY_HEIGHT*2;
-	public static final int RED_ENEMY_X = PROGRAM_WIDTH/2-ENEMY_WIDTH/2;
-	public static final int RED_ENEMY_Y = PROGRAM_HEIGHT/2-ENEMY_HEIGHT/2;
+	public static final int ENTITY_WIDTH = 45;
+	public static final int ENTITY_HEIGHT = 45;
+	public static final int FIGHTER_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
+	public static final int FIGHTER_Y = PROGRAM_HEIGHT-ENTITY_HEIGHT*2;
+	public static final int RED_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
+	public static final int RED_ENEMY_Y = PROGRAM_HEIGHT/2-ENTITY_HEIGHT/2;
 	public static final int ENEMY_SPEED = 4;
 	public static final int DELAY_MS = 25;
 	
@@ -23,10 +23,8 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 	
 	//to test
 	private Red redEnemy = new Red();
-	private GImage enemyImage;
 	
 	private Fighter fighter = new Fighter();
-	private GImage fighterImage;
 	
 	public void init() {
 		setSize(PROGRAM_WIDTH, PROGRAM_HEIGHT);
@@ -36,13 +34,17 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 	public void run() {
 		numTimes = 0;
 		
-		fighter = new Fighter(3);
-		fighter.setLocation(FIGHTER_X+200, FIGHTER_Y);
-		redEnemy = new Red(fighter, 0);
-		redEnemy.setLocation(RED_ENEMY_X, RED_ENEMY_Y);
+		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
+		fighter.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		fighter.getFighterImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		
+		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter, 0);
+		redEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		redEnemy.getRedEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		
 		//draws the fighter and enemy
-		drawFighter(fighter);
+		add(redEnemy.getRedEnemyImage());
+		add(fighter.getFighterImage());
 		drawEnemy(redEnemy);
 		
 		//sets the target and direction for the enemy to travel
@@ -61,20 +63,30 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 			
 		}
 		
-		fighter.setLocation(fighterImage.getX(), fighterImage.getY());
+		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
+		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
 		//moves enemy toward player
-		enemyImage.movePolar(ENEMY_SPEED, redEnemy.getDeg());
+		redEnemy.getRedEnemyImage().movePolar(ENEMY_SPEED, redEnemy.getDeg());
+		
+		//Updates position
+		
+		//fighter.setFighterPosition(fighter.getFighterImage());
+		redEnemy.setRedEnemyPosition(redEnemy.getRedEnemyImage());
+		
+		
 		
 		//tests if the enemy hits the fighter
-		if(redEnemy.intersects(fighter)) {
+		if(fighter.intersects(redEnemy)) {
 			fighter.setLives(fighter.getLives()-1);
-			fighter.setLocation(0, 0);
+			fighter.setFighterPosition(0, 0);
+			System.out.print(fighter.getX() +", " + fighter.getY());
 			
 			//removes fighter from the game
-			fighterImage.setVisible(false);
-			fighterImage.setLocation(0, 0);
+			fighter.getFighterImage().setVisible(false);
+			fighter.getFighterImage().setLocation(0, 0);
 		}
+		
 		if(redEnemy.getY() == fighter.getY()) {
 			//build a function 
 		}
@@ -83,8 +95,8 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 	
 	//Finds the degrees for the movePolar function
 	public double calculateDegMove(Fighter target) {
-		double tempX = fighter.getX()-redEnemy.getX();
-		double tempY = redEnemy.getY()-fighter.getY();
+		double tempX = fighter.getFighterImage().getX()-redEnemy.getRedEnemyImage().getX();
+		double tempY = redEnemy.getRedEnemyImage().getY()-fighter.getFighterImage().getY();
 		double degRads = Math.atan(tempY/tempX);
 		double deg = Math.toDegrees(degRads);
 		if(deg < 0) {
@@ -104,11 +116,7 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 	}
 	
 	public void drawEnemy(enemy e) {
-		//if(redEnemy.getEnemyType() == enemyType.RED) { //null-pointer exception
-			enemyImage = new GImage("Red.png", e.getX(), e.getY());
-			enemyImage.setSize(ENEMY_WIDTH, ENEMY_HEIGHT);
-			add(enemyImage);
-		//}
+		
 	}
 	
 	
@@ -117,11 +125,12 @@ public class Graphics extends GraphicsProgram implements ActionListener{
 		
 	}
 	
+	/*
 	public void drawFighter(Fighter f) {
 		fighterImage = new GImage("Fighter.png", f.getX(), f.getY());
-		fighterImage .setSize(ENEMY_WIDTH, ENEMY_HEIGHT);
+		fighterImage.setSize(ENEMY_WIDTH, ENEMY_HEIGHT);
 		add(fighterImage);
-	}
+	}*/											//Not needed anymore
 	
 	//TODO: draws "lives" number of fighter images to represent how many lives the user has left.
 	public void drawRemainingLives() {

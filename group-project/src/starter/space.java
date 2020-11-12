@@ -1,32 +1,32 @@
 package starter;
 
 public class space {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
 	space(){
 		x = 0;
 		y = 0;
 	}
 	
-	public space(int newX, int newY) {
+	public space(double newX, double newY) {
 		x = newX;
 		y = newY;
 	}
 	
-	public void setX(int newX) {
+	public void setX(double newX) {
 		x = newX;
 	}
 	
-	public void setY(int newY) {
+	public void setY(double newY) {
 		y = newY;
 	}
 	
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 }
