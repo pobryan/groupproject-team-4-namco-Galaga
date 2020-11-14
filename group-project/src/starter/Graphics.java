@@ -35,7 +35,7 @@ public class Graphics extends GraphicsPane{
 		fighter.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		fighter.getFighterImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		
-		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter, 0);
+		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
 		redEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		redEnemy.getRedEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		
@@ -51,16 +51,22 @@ public class Graphics extends GraphicsPane{
 
 	@Override
 	public void showContents() {
-		// TODO Auto-generated method stub
 		program.add(fighter.getFighterImage());
 		program.add(redEnemy.getRedEnemyImage());
+		for(GImage life:fighter.getLives()) {
+			life.setLocation(550, 10);
+			program.add(life);
+		}
 	}
 
 	@Override
 	public void hideContents() {
-		// TODO Auto-generated method stub
 		program.remove(fighter.getFighterImage());
 		program.remove(redEnemy.getRedEnemyImage());
+		
+		for(GImage life:fighter.getLives()) {
+			program.remove(life);
+		}
 	}
 	
 	//Moves the enemy toward the Fighter(temporary)
@@ -85,13 +91,13 @@ public class Graphics extends GraphicsPane{
 		
 		//tests if the enemy hits the fighter
 		if(fighter.intersects(redEnemy)) {
-			fighter.setLives(fighter.getLives()-1);
+			fighter.setLives(fighter.getLives().size()-1);
 			fighter.setFighterPosition(0, 0);
 			System.out.print(fighter.getX() +", " + fighter.getY());
 			
 			//removes fighter from the game
-			fighter.getFighterImage().setVisible(false);
-			fighter.getFighterImage().setLocation(0, 0);
+//			fighter.getFighterImage().setVisible(false);
+//			fighter.getFighterImage().setLocation(0, 0);
 		}
 		
 		if(redEnemy.getY() == fighter.getY()) {
@@ -132,20 +138,16 @@ public class Graphics extends GraphicsPane{
 		
 	}
 	
-	/*
-	public void drawFighter(Fighter f) {
-		fighterImage = new GImage("Fighter.png", f.getX(), f.getY());
-		fighterImage.setSize(ENEMY_WIDTH, ENEMY_HEIGHT);
-		add(fighterImage);
-	}*/											//Not needed anymore
-	
-	//TODO: draws "lives" number of fighter images to represent how many lives the user has left.
-	public void drawRemainingLives() {
-		
-	}
-	
 	//TODO: draws the user's current score in the top left.
 	public void drawScore() {
 		
+	}
+	
+	public void fighterHit() {
+		if(fighter.isFighterHit()) {
+			program.remove(fighter.getFighterImage());
+			program.remove(fighter.getLives().get(0));
+			fighter.getLives().remove(0);
+		}
 	}
 }

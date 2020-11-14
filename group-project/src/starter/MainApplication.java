@@ -19,7 +19,7 @@ public class MainApplication extends GraphicsApplication {
 //		somePane = new SomePane(this);
 		menu = new MenuPane(this);
 		graphics=new Graphics(this);
-		switchToMenu();
+		switchToGraphics();
 	}
 	
 	public void switchToGraphics() {
