@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-public class Graphics extends GraphicsPane{
+public class Graphics extends GraphicsPane implements ActionListener{
 	private MainApplication program;
 	
 	public static final int PROGRAM_WIDTH = 800;
@@ -45,10 +45,9 @@ public class Graphics extends GraphicsPane{
 		
 		//sets the target and direction for the enemy to travel
 		redEnemy.setRedTarget(fighter);
-		redEnemy.setDeg(calculateDegMove(redEnemy.getRedTarget()));
 		
 		//initializes and starts the timer
-		Timer gameTimer = new Timer(DELAY_MS,listen);
+		Timer gameTimer = new Timer(DELAY_MS, this);
 		gameTimer.start();
 	}
 	
@@ -84,17 +83,11 @@ public class Graphics extends GraphicsPane{
 			
 		}
 		
+		//redEnemy.getRedEnemyImage().movePolar(4, 0);
+		redEnemy.attack(fighter);
+		
 		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
-		
-		//moves enemy toward player
-		redEnemy.getRedEnemyImage().movePolar(ENEMY_SPEED, redEnemy.getDeg());
-		
-		//Updates position
-		
-		//fighter.setFighterPosition(fighter.getFighterImage());
-		redEnemy.setRedEnemyPosition(redEnemy.getRedEnemyImage());
-		
 		
 		
 		//tests if the enemy hits the fighter
@@ -113,23 +106,6 @@ public class Graphics extends GraphicsPane{
 			//build a function 
 		}
 		numTimes++;
-	}
-	
-	//Finds the degrees for the movePolar function
-	public double calculateDegMove(Fighter target) {
-		double tempX = fighter.getFighterImage().getX()-redEnemy.getRedEnemyImage().getX();
-		double tempY = redEnemy.getRedEnemyImage().getY()-fighter.getFighterImage().getY();
-		double degRads = Math.atan(tempY/tempX);
-		double deg = Math.toDegrees(degRads);
-		if(deg < 0) {
-			deg+=360;
-		}
-		if(tempX < 0 && tempY < 0) {
-			deg+=180;
-		}
-		//outputs degrees
-		System.out.println(deg);
-		return deg;
 	}
 	
 	//TODO: draws the Galaga background

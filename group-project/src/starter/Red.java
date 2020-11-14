@@ -3,9 +3,10 @@ package starter;
 import acm.graphics.GImage;
 
 public class Red extends enemy{
+	public static final int SPEED = 4;
 	
 	Fighter target;
-	private double degToMove;
+	private double degToAttack, degToRetreat;
 	//add GImage object
 	private GImage redEnemyImage;
 	private space spaceToAttack, spaceToRetreat;
@@ -13,14 +14,14 @@ public class Red extends enemy{
 	
 	Red(){
 		this.setLocation(0, 0);
-		degToMove = 0;
+		degToAttack = 0;
+		degToRetreat = 0;
 		redEnemyImage = new GImage("Red.png", 0, 0);
 		redEnemyImage.setLocation(0, 0);
 		attacking = false;
 	}
 	
 	Red(int x, int y, Fighter target){
-		degToMove = 0;
 		this.setLocation(x, y);
 		this.target = target;
 		//spaceToReturn = start;
@@ -28,12 +29,14 @@ public class Red extends enemy{
 		spaceToAttack = new space(target.getX(), target.getY());
 		spaceToRetreat = new space(x, y);
 		attacking = false;
+		degToAttack = calculateDegToAttack();
+		degToRetreat = calculateDegToRetreat();
 	}
 	
 	// methods
 	
 	//takes in a red Enemy object and returns the degrees to move toward the Fighter.
-	public double calculateDegMoveAttack() {
+	public double calculateDegToAttack() {
 		if(target.getX() == this.getX()) {
 			return 270;
 		}
@@ -49,13 +52,35 @@ public class Red extends enemy{
 		}
 		//outputs degrees
 		System.out.println(deg);
-		degToMove = deg;
 		return deg;
 	}
 	
-	public double calculateDegMoveRetreat() {
-		double newDeg = (degToMove + 180) % 360;
+	public double calculateDegToRetreat() {
+		double newDeg = (degToAttack + 180) % 360;
+		System.out.println(newDeg);
 		return newDeg;
+	}
+	
+	public void attack(Fighter f) {
+		if( ( this.getY() == spaceToRetreat.getY() ) && (attacking == false && retreating == false)) {
+			target = f;
+			attacking = true;
+		}
+		if( ( this.getY() == spaceToAttack.getY() ) && (attacking == true && retreating == false)){
+			attacking = false;
+			retreating = true;
+		}
+		if( ( this.getY() == spaceToRetreat.getY() ) && (attacking == false && retreating == true)){
+			retreating = false;
+		}
+		if(attacking == true) {
+			redEnemyImage.movePolar(SPEED, degToAttack);
+			this.setLocation(redEnemyImage.getX(), redEnemyImage.getY());
+		}
+		if(retreating == true) {
+			redEnemyImage.movePolar(SPEED, degToRetreat);
+			this.setLocation(redEnemyImage.getX(), redEnemyImage.getY());
+		}
 	}
 	
 	// get  functions
@@ -64,8 +89,12 @@ public class Red extends enemy{
 		return target;
 	}
 	
-	public double getDeg() {
-		return degToMove;
+	public double getDegToAttack() {
+		return degToAttack;
+	}
+	
+	public double getDegToRetreat() {
+		return degToRetreat;
 	}
 	
 	public GImage getRedEnemyImage() {
@@ -93,10 +122,13 @@ public class Red extends enemy{
 		target = f;
 	}
 	
-	public void setDeg(double d) {
-		degToMove = d;
+	public void setDegToAttack(double d) {
+		degToAttack = d;
 	}
-
+	
+	public void setDegToRetreat(double d) {
+		degToRetreat = d;
+	}
 	public void setRedEnemyPosition(GImage i) {
 		double imageX = i.getX();
 		double imageY = i.getY();
