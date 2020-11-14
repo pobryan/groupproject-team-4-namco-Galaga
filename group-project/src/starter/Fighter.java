@@ -1,5 +1,7 @@
 package starter;
 
+import java.util.ArrayList;
+
 import acm.graphics.GImage;
 import acm.graphics.GRectangle;
 
@@ -9,14 +11,15 @@ public class Fighter extends GRectangle{
 	
 	//private space position;				We are now inheriting GRectangle.
 	double speed;
-	int lives;
+//	int lives;
+	private ArrayList<GImage> lives;
 	Bullet shoot;
 	//add a GImage
 	private GImage fighterImage;
 	
 	
 	//Getters
-	public int getLives() {
+	public ArrayList<GImage> getLives() {
 		return lives;
 	}
 	
@@ -28,51 +31,61 @@ public class Fighter extends GRectangle{
 	public GImage getFighterImage() {
 		return fighterImage;
 	}
+	
 	//Setters
-	public void setFighterPosition(GImage i) {
-		double imageX = i.getX();
-		double imageY = i.getY();
-		this.setLocation(imageX, imageY);
-	}
+//	public void setFighterPosition(GImage i) {
+//		double imageX = i.getX();
+//		double imageY = i.getY();
+//		this.setLocation(imageX, imageY);
+//	}
+	
 	public void setFighterPosition(double x, double y) {
 		this.setLocation(x,y);
 		fighterImage.setLocation(x, y);
 	}
+	
 	public void setLives(int lives) {
-		this.lives = lives;
+		this.lives = new ArrayList<GImage>(lives);
 	}
 	
 	//Constructors
 	Fighter(){
 		//position = new space(0, 0);
-		lives = 3;
 		this.setLocation(0, 0);
 		fighterImage = new GImage("Fighter.png", 0, 0);
 		fighterImage.setLocation(0, 0);
+		lives = new ArrayList<GImage>(3);
+		for(int i=0;i<3;i++) {
+			GImage life=new GImage("Fighter.png");
+			life.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+			lives.add(life);
+		}
 	}
 	
 	Fighter(int x, int y, /*space p,*/ int l){
 		//position = new space(x, y);
 		//position = p;
-		lives = l;
 		this.setLocation(x, y);
 		fighterImage = new GImage("Fighter.png", x, y);
+		lives = new ArrayList<GImage>(l);
+		for(int i=0;i<l;i++) {
+			GImage life=new GImage("Fighter.png");
+			life.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+			lives.add(life);
+		}
 	}
 	
 	//Methods
 	public void addLife() {
-		lives++;
+		lives.add(fighterImage);
 	}
 	
 	public void loseLife() {
-		lives--;
+		lives.remove(fighterImage);
 	}
 	
 	public boolean isLivesEmpty() {
-		if(lives==-1) {
-			return true;
-		}
-		return false;
+		return lives.isEmpty();
 	}
 	
 	public boolean isFighterHit() {
