@@ -104,7 +104,7 @@ public class Graphics extends GraphicsPane{
 			System.out.print(fighter.getX() +", " + fighter.getY());
 			
 			//removes fighter from the game
-			fighterHit();
+//			fighterHit();
 //			fighter.getFighterImage().setVisible(false);
 //			fighter.getFighterImage().setLocation(0, 0);
 		}
