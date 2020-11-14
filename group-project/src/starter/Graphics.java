@@ -2,6 +2,8 @@ package starter;
 
 import acm.graphics.GImage;
 import acm.program.GraphicsProgram;
+
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -19,6 +21,8 @@ public class Graphics extends GraphicsPane{
 	public static final int RED_ENEMY_Y = PROGRAM_HEIGHT/2-ENTITY_HEIGHT/2;
 	public static final int ENEMY_SPEED = 4;
 	public static final int DELAY_MS = 25;
+	private static final int LIVES_X = 0;
+	private static final int LIVES_Y = 550;
 	
 	private int numTimes=0;
 	private ActionListener listen;
@@ -51,11 +55,15 @@ public class Graphics extends GraphicsPane{
 
 	@Override
 	public void showContents() {
+		program.setBackground(Color.black);
 		program.add(fighter.getFighterImage());
 		program.add(redEnemy.getRedEnemyImage());
+		int space=5;
 		for(GImage life:fighter.getLives()) {
-			life.setLocation(550, 10);
+//			life.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+			life.setLocation(LIVES_X+space, LIVES_Y);
 			program.add(life);
+			space=ENTITY_WIDTH+space+5;
 		}
 	}
 
@@ -96,6 +104,7 @@ public class Graphics extends GraphicsPane{
 			System.out.print(fighter.getX() +", " + fighter.getY());
 			
 			//removes fighter from the game
+			fighterHit();
 //			fighter.getFighterImage().setVisible(false);
 //			fighter.getFighterImage().setLocation(0, 0);
 		}
