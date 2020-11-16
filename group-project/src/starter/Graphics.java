@@ -1,11 +1,12 @@
 package starter;
 
 import acm.graphics.GImage;
-import acm.program.GraphicsProgram;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
 import javax.swing.Timer;
 
 public class Graphics extends GraphicsPane implements ActionListener{
@@ -25,7 +26,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	private static final int LIVES_Y = 550;
 	
 	private int numTimes=0;
-	private ActionListener listen;
 	
 	//to test
 	private Red redEnemy;
@@ -76,6 +76,18 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 	}
 	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			fighter.shoot();
+			for(GImage bullet:fighter.getBullet().getBullets()) {
+				program.remove(fighter.getFighterImage());
+				program.add(bullet);
+				program.add(fighter.getFighterImage());
+			}
+		}
+	}
+	
 	//Moves the enemy toward the Fighter(temporary)
 	public void actionPerformed(ActionEvent e) {
 		//TODO: Meant to make the enemy start moving once every 2.5(x) seconds.
@@ -84,7 +96,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		
 		//redEnemy.getRedEnemyImage().movePolar(4, 0);
-		redEnemy.attack(fighter);
+//		redEnemy.attack(fighter);
 		
 		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());

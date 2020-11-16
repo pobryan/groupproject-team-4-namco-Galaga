@@ -1,36 +1,41 @@
 package starter;
 
 import java.util.ArrayList;
-import acm.graphics.GRect;
-import java.awt.*;
+
+import acm.graphics.GImage;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Bullet {
+public class Bullet implements ActionListener{
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int WINDOW_WIDTH = 800;
-	public static final int WIDTH = 5;
+	public static final int WIDTH = 7;
 	public static final int HEIGHT = 15;
 	public static final int MS = 50;
 	
 	private space start;
 	private int speed;
-	private GRect bullet;
-	private ActionListener listener;
-	private ArrayList<GRect> bullets;
+	private GImage bullet;
+	private ArrayList<GImage> bullets;
 	private Timer movement;
 	
 //Constructor
-	Bullet(int x, int y, int speed){
-		start.setX(x);
-		start.setY(y);
+	Bullet(double x, double y, int speed){
+		bullets= new ArrayList<GImage>();
+		movement= new Timer(MS, this);
+		movement.start();
+		start= new space(x,y);
 		this.speed=speed;
 	}
 	
 //Getters
 	public space getStart() {
 		return start;
+	}
+	
+	public ArrayList<GImage> getBullets(){
+		return bullets;
 	}
 	
 //Setters
@@ -44,22 +49,21 @@ public class Bullet {
 	
 //Methods
 	//Makes bullets to add on screen
-	public GRect makeBullet(int x, int y) {
-		GRect tempBullet = new GRect(x, y,WIDTH, HEIGHT);
-		tempBullet.setColor(Color.ORANGE);
-		tempBullet.setFilled(true);
+	public GImage makeBullet(double x, double y) {
+		GImage tempBullet = new GImage("fighter bullet.png",x, y);
+		tempBullet.setSize(WIDTH, HEIGHT);;
 		return tempBullet;
 	}
 	
 	//Adds bullets on screen
-	public void addBullet(int x, int y) {
+	public void addBullet(double x, double y) {
 		bullet= makeBullet(x,y);
-		bullets.add(bullet);
+		bullets.add(bullet); //WHAT IS WRONG HERE?
 	}
 	
 	//Continuously moves all bullets on screen with actionPerformed 
 	public void moveAllBullets() {
-		for(GRect bullet:bullets) {
+		for(GImage bullet:bullets) {
 			bullet.move(0,speed);
 			removeBullet(false);
 		}
@@ -67,7 +71,7 @@ public class Bullet {
 	
 	//Remove bullet from bullets if it hits enemy/fighter or if it goes off screen
 	public void removeBullet(boolean hit) {
-		for(GRect bullet:bullets) {
+		for(GImage bullet:bullets) {
 			if(bullet.getX()>WINDOW_HEIGHT|| hit) {
 				bullets.remove(bullet);
 			}
@@ -77,12 +81,6 @@ public class Bullet {
 //event methods
 	public void actionPerformed(ActionEvent e) {
 		moveAllBullets();
-	}
-	
-	public void run() {
-		bullets= new ArrayList<GRect>();
-		movement= new Timer(MS, listener);
-		movement.start();
 	}
 }
 

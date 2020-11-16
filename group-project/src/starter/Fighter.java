@@ -6,15 +6,14 @@ import acm.graphics.GImage;
 import acm.graphics.GRectangle;
 
 public class Fighter extends GRectangle{
-	public static final int IMAGE_WIDTH = 45;
-	public static final int IMAGE_HEIGHT = 45;
+	public static final int IMAGE_SIZE = 45;
+	public static final int FIGHTER_MID=(IMAGE_SIZE/2)-3;
 	
 	//private space position;				We are now inheriting GRectangle.
 	double speed;
-//	int lives;
 	private ArrayList<GImage> lives;
 	Bullet shoot;
-	//add a GImage
+	
 	private GImage fighterImage;
 	
 	
@@ -30,6 +29,10 @@ public class Fighter extends GRectangle{
 	
 	public GImage getFighterImage() {
 		return fighterImage;
+	}
+	
+	public Bullet getBullet() {
+		return shoot;
 	}
 	
 	//Setters
@@ -57,12 +60,13 @@ public class Fighter extends GRectangle{
 		lives = new ArrayList<GImage>(3);
 		for(int i=0;i<3;i++) {
 			GImage life=new GImage("Fighter.png");
-			life.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+			life.setSize(IMAGE_SIZE, IMAGE_SIZE);
 			lives.add(life);
 		}
+		shoot=new Bullet(0,0,-4);
 	}
 	
-	Fighter(int x, int y, /*space p,*/ int l){
+	Fighter(double x, double y, /*space p,*/ int l){
 		//position = new space(x, y);
 		//position = p;
 		this.setLocation(x, y);
@@ -70,9 +74,10 @@ public class Fighter extends GRectangle{
 		lives = new ArrayList<GImage>(l);
 		for(int i=0;i<l;i++) {
 			GImage life=new GImage("Fighter.png");
-			life.setSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+			life.setSize(IMAGE_SIZE, IMAGE_SIZE);
 			lives.add(life);
 		}
+		shoot=new Bullet(x,y,-4);
 	}
 	
 	//Methods
@@ -93,7 +98,7 @@ public class Fighter extends GRectangle{
 	}
 	
 	public void shoot() {
-		
+		shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY());
 	}
 	
 	public void moveLeft() {
