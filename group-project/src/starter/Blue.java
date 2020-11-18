@@ -83,11 +83,16 @@ public class Blue extends enemy {
 		return deg;
 	}
 	
-	//
+	//calculates the degrees for the blue enemy to return after attacking
 	public double calculateDegToRetreat() {
 		double newDeg = (degToAttack + 180) % 360;
 		System.out.println(newDeg);
 		return newDeg;
+	}
+	
+	//TODO: calculates the degrees to shoot a bullet(toward the fighter)
+	public double calculateDegToShoot() {
+		return 0;
 	}
 	
 	public void attack() {
@@ -107,6 +112,10 @@ public class Blue extends enemy {
 		if(retreating == true) {
 			blueEnemyImage.movePolar(SPEED, degToRetreat);
 			this.setLocation(blueEnemyImage.getX(), blueEnemyImage.getY());
+		}
+		if(this.getY() >= spaceToRetreat.getY() && (attacking == false && retreating == true)) {
+			retreating = false;
+			spaceToRetreat = new space(this.getX(), this.getY());
 		}
 	}
 	
