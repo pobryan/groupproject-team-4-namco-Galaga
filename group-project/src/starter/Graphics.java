@@ -20,6 +20,8 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	public static final int FIGHTER_Y = PROGRAM_HEIGHT-ENTITY_HEIGHT*2;
 	public static final int RED_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
 	public static final int RED_ENEMY_Y = PROGRAM_HEIGHT/2-ENTITY_HEIGHT/2;
+	public static final int BLUE_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
+	public static final int BLUE_ENEMY_Y = PROGRAM_HEIGHT/2-100-ENTITY_HEIGHT/2;
 	public static final int ENEMY_SPEED = 4;
 	public static final int DELAY_MS = 25;
 	private static final int LIVES_X = 0;
@@ -29,6 +31,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	//to test
 	private Red redEnemy;
+	private Blue blueEnemy;
 	private Fighter fighter;
 	
 //Constructor
@@ -42,6 +45,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
 		redEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		redEnemy.getRedEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		
+		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
+		blueEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		blueEnemy.getBlueEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 		
 		//sets the target and direction for the enemy to travel
 		redEnemy.setRedTarget(fighter);
@@ -57,6 +64,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.setBackground(Color.black);
 		program.add(fighter.getFighterImage());
 		program.add(redEnemy.getRedEnemyImage());
+		program.add(blueEnemy.getBlueEnemyImage());
 		int space=5;
 		for(GImage life:fighter.getLives()) {
 //			life.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
@@ -96,11 +104,12 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		
 		//redEnemy.getRedEnemyImage().movePolar(4, 0);
-//		redEnemy.attack(fighter);
+		redEnemy.attack();
 		
 		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
+		blueEnemy.attack();
 		
 		//tests if the enemy hits the fighter
 		if(fighter.intersects(redEnemy)) {
