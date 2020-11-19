@@ -51,11 +51,12 @@ public abstract class GraphicsPane implements Interfaceable {
 	public void keyPressed(KeyEvent e) {
 		//program.add(fighter.getFighterImage());
 			int key = e.getKeyCode();
-				if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			System.out.println(key==KeyEvent.VK_A);
+				if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
 					//fighter.moveFighterLeft(FIGHTER_X, FIGHTER_Y);
 					System.out.println("moveR");
 				}
-				else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+				if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
 					//fighter.moveFighterRight(FIGHTER_X, FIGHTER_Y);
 					System.out.println("moveL");
 				}
