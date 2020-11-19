@@ -11,8 +11,6 @@ import acm.graphics.GRectangle;
 public class Fighter extends GRectangle{
 	public static final int IMAGE_WIDTH = 45;
 	public static final int IMAGE_HEIGHT = 45;
-	public static final int FIGHTER_POSITION_X = 0;
-	public static final int FIGHTER_POSITION_Y = 0;
 	
 	//private space position;				We are now inheriting GRectangle.
 	double speed;
@@ -21,7 +19,6 @@ public class Fighter extends GRectangle{
 	Bullet shoot;
 	//add a GImage
 	private GImage fighterImage;
-	private Fighter fighterPosition;
 	
 	
 	//Getters
