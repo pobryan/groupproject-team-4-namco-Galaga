@@ -58,7 +58,7 @@ public class Bullet implements ActionListener{
 	//Adds bullets on screen
 	public void addBullet(double x, double y) {
 		bullet= makeBullet(x,y);
-		bullets.add(bullet); //WHAT IS WRONG HERE?
+		bullets.add(bullet);
 	}
 	
 	//Continuously moves all bullets on screen with actionPerformed 

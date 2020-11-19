@@ -1,8 +1,10 @@
 package starter;
 
 import acm.graphics.GImage;
+import acm.graphics.GLabel;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,8 +28,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	public static final int DELAY_MS = 25;
 	private static final int LIVES_X = 0;
 	private static final int LIVES_Y = 550;
+	private static final int BULLET_GAP = 10;
 	
-	private int numTimes=0;
+	private int numTimes=0, otherSec=5;
+	private GLabel restart;
 	
 	//to test
 	private Red redEnemy;
@@ -37,6 +41,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 //Constructor
 	public Graphics(MainApplication app) {
 		this.program=app;
+		
+		restart= new GLabel("READY", PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
+		restart.setColor(Color.cyan);
+		restart.setFont(new Font("Consolas",Font.BOLD, 30));
 		
 		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
 		fighter.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
@@ -67,7 +75,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.add(blueEnemy.getBlueEnemyImage());
 		int space=5;
 		for(GImage life:fighter.getLives()) {
-//			life.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
 			life.setLocation(LIVES_X+space, LIVES_Y);
 			program.add(life);
 			space=ENTITY_WIDTH+space+5;
@@ -78,7 +85,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	public void hideContents() {
 		program.remove(fighter.getFighterImage());
 		program.remove(redEnemy.getRedEnemyImage());
-		
 		for(GImage life:fighter.getLives()) {
 			program.remove(life);
 		}
@@ -86,7 +92,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+		if(e.getKeyCode()==KeyEvent.VK_SPACE && otherSec % BULLET_GAP == 0) {
 			fighter.shoot();
 			for(GImage bullet:fighter.getBullet().getBullets()) {
 				program.remove(fighter.getFighterImage());
@@ -94,6 +100,13 @@ public class Graphics extends GraphicsPane implements ActionListener{
 				program.add(fighter.getFighterImage());
 			}
 		}
+		else if(e.getKeyCode()==KeyEvent.VK_RIGHT|| e.getKeyCode()==KeyEvent.VK_D) {
+			fighter.moveRight();
+		}
+		else if(e.getKeyCode()==KeyEvent.VK_LEFT|| e.getKeyCode()==KeyEvent.VK_A) {
+			fighter.moveLeft();
+		}
+		otherSec++;
 	}
 	
 	//Moves the enemy toward the Fighter(temporary)
@@ -104,7 +117,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		
 		//redEnemy.getRedEnemyImage().movePolar(4, 0);
-		redEnemy.attack();
+//		redEnemy.attack();
 		
 		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
@@ -112,16 +125,17 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		blueEnemy.attack();
 		
 		//tests if the enemy hits the fighter
-		if(fighter.intersects(redEnemy)) {
-			fighter.setLives(fighter.getLives().size()-1);
-			fighter.setFighterPosition(0, 0);
-			System.out.print(fighter.getX() +", " + fighter.getY());
+//		if(fighter.intersects(redEnemy)) {
+//			fighter.setLives(fighter.getLives().size()-1);
+//			fighter.setFighterPosition(0, 0);
+//			System.out.print(fighter.getX() +", " + fighter.getY());
+//			
+//			//removes fighter from the game
+			fighterHit();
 			
-			//removes fighter from the game
-//			fighterHit();
 //			fighter.getFighterImage().setVisible(false);
 //			fighter.getFighterImage().setLocation(0, 0);
-		}
+//		}
 		
 		if(redEnemy.getY() == fighter.getY()) {
 			//build a function 
@@ -149,11 +163,29 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		
 	}
 	
+	public void ready() {
+		
+		
+	}
+	
 	public void fighterHit() {
-		if(fighter.isFighterHit()) {
+		if(fighter.isFighterHit(redEnemy)) {
 			program.remove(fighter.getFighterImage());
-			program.remove(fighter.getLives().get(0));
-			fighter.getLives().remove(0);
+			program.remove(fighter.getLives().get(fighter.getLives().size()-1));
+			fighter.loseLife();
+			
+//			if(numTimes % 5 == 0) {
+//				ready();
+				program.add(restart);
+//			}
+//			else if(numTimes % 20 == 0) {
+//				fighter.setFighterPosition(FIGHTER_X, FIGHTER_Y);
+				fighter.setFighterPosition(50, 50);
+				program.add(fighter.getFighterImage());
+//			}
+//			for(int i=numTimes % 10; numTimes<numTimes % 50;i=numTimes % 10) {
+//				program.add(restart);
+//			}
 		}
 	}
 }
