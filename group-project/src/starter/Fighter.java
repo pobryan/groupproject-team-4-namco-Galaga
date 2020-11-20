@@ -3,11 +3,13 @@ package starter;
 import java.util.ArrayList;
 
 import acm.graphics.GImage;
+import acm.graphics.GObject;
 import acm.graphics.GRectangle;
 
 public class Fighter extends GRectangle{
 	public static final int IMAGE_SIZE = 45;
 	public static final int FIGHTER_MID=(IMAGE_SIZE/2)-3;
+	public static final int PROGRAM_WIDTH = 800;
 	
 	//private space position;				We are now inheriting GRectangle.
 	double speed;
@@ -15,9 +17,10 @@ public class Fighter extends GRectangle{
 	Bullet shoot;
 	
 	private GImage fighterImage;
+	private GImage bulletImage;
 	
 	
-	//Getters
+//Getters
 	public ArrayList<GImage> getLives() {
 		return lives;
 	}
@@ -55,6 +58,7 @@ public class Fighter extends GRectangle{
 	Fighter(){
 		//position = new space(0, 0);
 		this.setLocation(0, 0);
+		bulletImage= new GImage("fighter bullet.png");
 		fighterImage = new GImage("Fighter.png", 0, 0);
 		fighterImage.setLocation(0, 0);
 		lives = new ArrayList<GImage>(3);
@@ -63,13 +67,14 @@ public class Fighter extends GRectangle{
 			life.setSize(IMAGE_SIZE, IMAGE_SIZE);
 			lives.add(life);
 		}
-		shoot=new Bullet(0,0,-4);
+		shoot=new Bullet(0,0,-4,bulletImage);
 	}
 	
 	Fighter(double x, double y, /*space p,*/ int l){
 		//position = new space(x, y);
 		//position = p;
 		this.setLocation(x, y);
+		bulletImage= new GImage("fighter bullet.png");
 		fighterImage = new GImage("Fighter.png", x, y);
 		lives = new ArrayList<GImage>(l);
 		for(int i=0;i<l;i++) {
@@ -77,7 +82,7 @@ public class Fighter extends GRectangle{
 			life.setSize(IMAGE_SIZE, IMAGE_SIZE);
 			lives.add(life);
 		}
-		shoot=new Bullet(x,y,-4);
+		shoot=new Bullet(x,y,-4, bulletImage);
 	}
 	
 	//Methods
@@ -86,19 +91,23 @@ public class Fighter extends GRectangle{
 	}
 	
 	public void loseLife() {
-		lives.remove(fighterImage);
+		lives.remove(lives.size()-1);
 	}
 	
 	public boolean isLivesEmpty() {
 		return lives.isEmpty();
 	}
 	
-	public boolean isFighterHit() {
-		return true;
+	public boolean isFighterHit(Red red) {
+		if(this.intersects(red)) {
+			System.out.print("Lives: "+lives.size());
+			return true;
+		}
+		return false;
 	}
 	
-	public void shoot() {
-		shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY());
+	public void shoot(MainApplication program) {
+			shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY(), program);
 	}
 	
 	public void moveLeft() {
@@ -108,6 +117,4 @@ public class Fighter extends GRectangle{
 	public void moveRight() {
 		
 	}
-	
-	
 }

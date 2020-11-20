@@ -16,26 +16,26 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	public static final int PROGRAM_WIDTH = 800;
 	public static final int PROGRAM_HEIGHT = 600;
-	public static final int ENTITY_WIDTH = 45;
-	public static final int ENTITY_HEIGHT = 45;
-	public static final int FIGHTER_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
-	public static final int FIGHTER_Y = PROGRAM_HEIGHT-ENTITY_HEIGHT*2;
-	public static final int RED_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
-	public static final int RED_ENEMY_Y = PROGRAM_HEIGHT/2-ENTITY_HEIGHT/2;
-	public static final int BLUE_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_WIDTH/2;
-	public static final int BLUE_ENEMY_Y = PROGRAM_HEIGHT/2-100-ENTITY_HEIGHT/2;
+	public static final int ENTITY_SIZE = 45;
+	public static final int FIGHTER_X = PROGRAM_WIDTH/2-ENTITY_SIZE/2;
+	public static final int FIGHTER_Y = PROGRAM_HEIGHT-ENTITY_SIZE*2;
+	public static final int RED_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_SIZE/2;
+	public static final int RED_ENEMY_Y = PROGRAM_HEIGHT/2-ENTITY_SIZE/2;
+	public static final int BLUE_ENEMY_X = PROGRAM_WIDTH/2-ENTITY_SIZE/2;
+	public static final int BLUE_ENEMY_Y = PROGRAM_HEIGHT/2-100-ENTITY_SIZE/2;
 	public static final int ENEMY_SPEED = 4;
 	public static final int DELAY_MS = 25;
 	private static final int LIVES_X = 0;
 	private static final int LIVES_Y = 550;
-	private static final int BULLET_GAP = 10;
+	private static final int BULLET_GAP = 15;
 	
-	private int numTimes=0, otherSec=5;
+	private int numTimes=0, otherSec=10;
 	private GLabel restart;
 	
 	//to test
 	private Red redEnemy;
 	private Blue blueEnemy;
+	private Green greenEnemy;
 	private Fighter fighter;
 	
 //Constructor
@@ -47,16 +47,20 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		restart.setFont(new Font("Consolas",Font.BOLD, 30));
 		
 		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
-		fighter.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
-		fighter.getFighterImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		fighter.setSize(ENTITY_SIZE, ENTITY_SIZE);
+		fighter.getFighterImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 		
 		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
-		redEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
-		redEnemy.getRedEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 		
 		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
-		blueEnemy.setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
-		blueEnemy.getBlueEnemyImage().setSize(ENTITY_WIDTH, ENTITY_HEIGHT);
+		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+		
+//		greenEnemy = new Green(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
+//		greenEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		greenEnemy.getGreenEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 		
 		//sets the target and direction for the enemy to travel
 		redEnemy.setRedTarget(fighter);
@@ -77,7 +81,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		for(GImage life:fighter.getLives()) {
 			life.setLocation(LIVES_X+space, LIVES_Y);
 			program.add(life);
-			space=ENTITY_WIDTH+space+5;
+			space=ENTITY_SIZE+space+5;
 		}
 	}
 
@@ -92,19 +96,13 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE && otherSec % BULLET_GAP == 0) {
-			fighter.shoot();
+		if(e.getKeyCode()==KeyEvent.VK_SPACE /*&& otherSec % BULLET_GAP == 0*/) {
+			fighter.shoot(program);
 			for(GImage bullet:fighter.getBullet().getBullets()) {
 				program.remove(fighter.getFighterImage());
 				program.add(bullet);
 				program.add(fighter.getFighterImage());
 			}
-		}
-		else if(e.getKeyCode()==KeyEvent.VK_RIGHT|| e.getKeyCode()==KeyEvent.VK_D) {
-			fighter.moveRight();
-		}
-		else if(e.getKeyCode()==KeyEvent.VK_LEFT|| e.getKeyCode()==KeyEvent.VK_A) {
-			fighter.moveLeft();
 		}
 		otherSec++;
 	}
@@ -120,9 +118,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 //		redEnemy.attack();
 		
 		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
-		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
+//		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
 		blueEnemy.attack();
+//		blueEnemy.shoot(program);
 		
 		//tests if the enemy hits the fighter
 //		if(fighter.intersects(redEnemy)) {
@@ -163,11 +162,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		
 	}
 	
-	public void ready() {
-		
-		
-	}
-	
 	public void fighterHit() {
 		if(fighter.isFighterHit(redEnemy)) {
 			program.remove(fighter.getFighterImage());
@@ -176,7 +170,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			
 //			if(numTimes % 5 == 0) {
 //				ready();
-				program.add(restart);
+//				program.add(restart);
 //			}
 //			else if(numTimes % 20 == 0) {
 //				fighter.setFighterPosition(FIGHTER_X, FIGHTER_Y);
