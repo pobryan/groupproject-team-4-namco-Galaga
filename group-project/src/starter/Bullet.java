@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class Bullet implements ActionListener{
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int WINDOW_WIDTH = 800;
-	public static final int WIDTH = 7;
+	public static final int WIDTH = 5;
 	public static final int HEIGHT = 15;
 	public static final int MS = 50;
 	
@@ -46,7 +46,6 @@ public class Bullet implements ActionListener{
 	public ArrayList<GImage> getEnemyBullets(){
 		return enemyBullets;
 	}
-	
 //Setters
 	public void setStart(int x, int y) {
 		start.setX(x);
@@ -118,5 +117,11 @@ public class Bullet implements ActionListener{
 		moveAllBullets();
 //		moveAllEnemyBullets();
 	}
+	
+//	public void run() {
+//		bullets= new ArrayList<GRect>();
+//		movement= new Timer(MS, listener);
+//		movement.start();
+//	}
 }
 

@@ -53,10 +53,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
 		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
 		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-		
-		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
-		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+
+//		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
+//		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 		
 //		greenEnemy = new Green(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
 //		greenEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
@@ -76,7 +76,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.setBackground(Color.black);
 		program.add(fighter.getFighterImage());
 		program.add(redEnemy.getRedEnemyImage());
-		program.add(blueEnemy.getBlueEnemyImage());
 		int space=5;
 		for(GImage life:fighter.getLives()) {
 			life.setLocation(LIVES_X+space, LIVES_Y);
@@ -115,12 +114,11 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		
 		//redEnemy.getRedEnemyImage().movePolar(4, 0);
-//		redEnemy.attack();
-		
+		redEnemy.attack(fighter);
 		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 //		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
-		blueEnemy.attack();
+//		blueEnemy.attack();
 //		blueEnemy.shoot(program);
 		
 		//tests if the enemy hits the fighter

@@ -29,6 +29,8 @@ public class Red extends enemy{
 		spaceToAttack = new space(target.getX(), target.getY());
 		spaceToRetreat = new space(x, y);
 		attacking = false;
+		degToAttack = calculateDegToAttack();
+		degToRetreat = calculateDegToRetreat();
 	}
 	
 	// methods
@@ -59,17 +61,16 @@ public class Red extends enemy{
 		return newDeg;
 	}
 	
-	public void attack() {
+	public void attack(Fighter f) {
 		if( ( this.getY() == spaceToRetreat.getY() ) && (attacking == false && retreating == false)) {
-			degToAttack = calculateDegToAttack();
+			target = f;
 			attacking = true;
 		}
-		if( ( this.getY() >= spaceToAttack.getY() ) && (attacking == true && retreating == false)){
-			degToRetreat = calculateDegToRetreat();
+		if( ( this.getY() == spaceToAttack.getY() ) && (attacking == true && retreating == false)){
 			attacking = false;
 			retreating = true;
 		}
-		if( ( this.getY() <= spaceToRetreat.getY() ) && (attacking == false && retreating == true)){
+		if( ( this.getY() == spaceToRetreat.getY() ) && (attacking == false && retreating == true)){
 			retreating = false;
 		}
 		if(attacking == true) {

@@ -1,5 +1,8 @@
 package starter;
 
+import java.awt.event.KeyEvent;
+import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import acm.graphics.GImage;
@@ -13,9 +16,10 @@ public class Fighter extends GRectangle{
 	
 	//private space position;				We are now inheriting GRectangle.
 	double speed;
+//	int lives;
 	private ArrayList<GImage> lives;
 	Bullet shoot;
-	
+	//add a GImage
 	private GImage fighterImage;
 	private GImage bulletImage;
 	
@@ -47,7 +51,7 @@ public class Fighter extends GRectangle{
 	
 	public void setFighterPosition(double x, double y) {
 		this.setLocation(x,y);
-		fighterImage.setLocation(x, y);
+		fighterImage.setLocation(x,y);
 	}
 	
 	public void setLives(int lives) {
@@ -70,7 +74,7 @@ public class Fighter extends GRectangle{
 		shoot=new Bullet(0,0,-4,bulletImage);
 	}
 	
-	Fighter(double x, double y, /*space p,*/ int l){
+	Fighter(int x, int y, /*space p,*/ int l){
 		//position = new space(x, y);
 		//position = p;
 		this.setLocation(x, y);
@@ -113,6 +117,17 @@ public class Fighter extends GRectangle{
 	public void moveLeft() {
 		
 	}
+	//how do I get this to interact 
+//	public void moveFighter(KeyEvent e) {
+//		char c = e.getKeyChar();
+//		int key = e.getKeyCode();
+//		if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
+//			fighterImage = new GImage("Fighter.png", FIGHTER_POSITION_X+3, FIGHTER_POSITION_X);
+//		}
+//		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
+//			fighterImage = new GImage("Fighter.png", FIGHTER_POSITION_X-3, FIGHTER_POSITION_X);
+//		}
+//	}
 	
 	public void moveRight() {
 		
