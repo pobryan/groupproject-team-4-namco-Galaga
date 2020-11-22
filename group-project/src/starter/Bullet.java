@@ -10,21 +10,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Bullet implements ActionListener{
-	public static final int WINDOW_HEIGHT = 600;
-	public static final int WINDOW_WIDTH = 800;
+	private MainApplication program;
+	
+	public static final int PROGRAM_HEIGHT = 600;
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 15;
-	public static final int MS = 50;
+	public static final int MS = 25;
 	
-	private MainApplication program;
+	
 	private space start;
-	private int speed;
-	private GImage bullet,image, enemyBullet;
+	private int speed, numTimes=0;
+	private GImage bullet, enemyBullet;
+	private String image;
 	private ArrayList<GImage> bullets, enemyBullets;
 	private Timer movement;
 	
 //Constructor
-	Bullet(double x, double y, int speed, GImage image){
+	Bullet(double x, double y, int speed, String image){
 		this.image=image;
 		bullets= new ArrayList<GImage>();
 		enemyBullets= new ArrayList<GImage>();
@@ -55,7 +57,7 @@ public class Bullet implements ActionListener{
 //Methods
 	//Makes bullets to add on screen
 	public GImage makeBullet(double x, double y) {
-		GImage tempBullet = image;
+		GImage tempBullet = new GImage(image);
 		tempBullet.setLocation(x, y);
 		tempBullet.setSize(WIDTH, HEIGHT);
 		return tempBullet;
@@ -66,7 +68,7 @@ public class Bullet implements ActionListener{
 		this.program=program;
 		bullet= makeBullet(x,y);
 		bullets.add(bullet);
-	}
+ 	}
 	
 	public void addEnemyBullet(double x, double y, MainApplication program) {
 		this.program=program;
@@ -76,38 +78,42 @@ public class Bullet implements ActionListener{
 	
 	//Continuously moves all bullets on screen with actionPerformed 
 	public void moveAllBullets() {
-		for(GImage bullet:bullets) {
-			bullet.move(0,speed);
-			removeBullet();
+		for(GImage bullet: bullets) {
+			bullet.move(0, speed);
 		}
+		removeBullet();
 	}
 	
 	public void moveAllEnemyBullets() {
-		for(GImage enemy:enemyBullets) {
-			enemy.move(0,speed);
+		for(int i=0; i<enemyBullets.size(); i++) {
+			enemyBullet=enemyBullets.get(i);
+			
+			enemyBullet.move(0,speed);
 			removeEnemyBullet();
 		}
 	}
 	
 	//Remove bullet from bullets if it hits enemy/fighter or if it goes off screen
 	public void removeBullet() {
-		for(GImage bullet:bullets) {
-			GObject fighterElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);//NULL POINTER EXCEPTION
+		for(int i=0; i<bullets.size(); i++) {
+			bullet= bullets.get(i);
+			GObject fighterElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);
 			
-			if(fighterElement!=null && fighterElement instanceof GImage || bullet.getY()<-15) {
+			if(bullet.getY()<-15 || (fighterElement!=null && fighterElement instanceof GImage)) {
 				program.remove(bullet);
-				bullets.remove(bullet);
+				bullets.remove(i);
 			}
 		}
 	}
 	
 	public void removeEnemyBullet() {
-		for(GImage enemy:enemyBullets) {
-			GObject enemyElement= program.getElementAt(enemy.getX()+(WIDTH/2), enemy.getY()-1);
+		for(int i=0; i<enemyBullets.size(); i++) {
+			enemyBullet=enemyBullets.get(i);
+			GObject enemyElement= program.getElementAt(enemyBullet.getX()+(WIDTH/2), enemyBullet.getY()-1);
 			
-			if(enemy.getY()>(WINDOW_HEIGHT+15) || (enemyElement!=null && enemyElement instanceof GImage)) {
-				program.remove(enemy);
-				bullets.remove(enemy);
+			if(enemyBullet.getY()>(PROGRAM_HEIGHT+15) || (enemyElement!=null && enemyElement instanceof GImage)) {
+				program.remove(enemyBullet);
+				bullets.remove(i);
 			}
 		}
 	}
@@ -116,6 +122,7 @@ public class Bullet implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		moveAllBullets();
 //		moveAllEnemyBullets();
+		numTimes++;
 	}
 	
 //	public void run() {

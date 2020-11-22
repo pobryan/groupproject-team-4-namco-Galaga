@@ -1,12 +1,7 @@
 package starter;
 
-import java.awt.event.KeyEvent;
-import java.awt.*;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
-
 import acm.graphics.GImage;
-import acm.graphics.GObject;
 import acm.graphics.GRectangle;
 
 public class Fighter extends GRectangle{
@@ -16,12 +11,11 @@ public class Fighter extends GRectangle{
 	
 	//private space position;				We are now inheriting GRectangle.
 	double speed;
-//	int lives;
 	private ArrayList<GImage> lives;
 	Bullet shoot;
 	//add a GImage
 	private GImage fighterImage;
-	private GImage bulletImage;
+	private String bulletImage;
 	
 	
 //Getters
@@ -62,7 +56,7 @@ public class Fighter extends GRectangle{
 	Fighter(){
 		//position = new space(0, 0);
 		this.setLocation(0, 0);
-		bulletImage= new GImage("fighter bullet.png");
+		bulletImage= new String("fighter bullet.png");
 		fighterImage = new GImage("Fighter.png", 0, 0);
 		fighterImage.setLocation(0, 0);
 		lives = new ArrayList<GImage>(3);
@@ -78,7 +72,7 @@ public class Fighter extends GRectangle{
 		//position = new space(x, y);
 		//position = p;
 		this.setLocation(x, y);
-		bulletImage= new GImage("fighter bullet.png");
+		bulletImage= new String("fighter bullet.png");
 		fighterImage = new GImage("Fighter.png", x, y);
 		lives = new ArrayList<GImage>(l);
 		for(int i=0;i<l;i++) {
@@ -107,7 +101,7 @@ public class Fighter extends GRectangle{
 			System.out.print("Lives: "+lives.size());
 			return true;
 		}
-		return false;
+		return false; 
 	}
 	
 	public void shoot(MainApplication program) {

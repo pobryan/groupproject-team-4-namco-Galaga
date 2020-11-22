@@ -27,9 +27,8 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	public static final int DELAY_MS = 25;
 	private static final int LIVES_X = 0;
 	private static final int LIVES_Y = 550;
-	private static final int BULLET_GAP = 15;
 	
-	private int numTimes=0, otherSec=10;
+	private int numTimes=0;
 	private GLabel restart;
 	
 	//to test
@@ -54,9 +53,9 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
 		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 
-//		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
-//		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-//		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
+		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 		
 //		greenEnemy = new Green(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
 //		greenEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
@@ -76,6 +75,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.setBackground(Color.black);
 		program.add(fighter.getFighterImage());
 		program.add(redEnemy.getRedEnemyImage());
+		program.add(blueEnemy.getBlueEnemyImage());
 		int space=5;
 		for(GImage life:fighter.getLives()) {
 			life.setLocation(LIVES_X+space, LIVES_Y);
@@ -95,15 +95,13 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE /*&& otherSec % BULLET_GAP == 0*/) {
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
 			fighter.shoot(program);
-			for(GImage bullet:fighter.getBullet().getBullets()) {
-				program.remove(fighter.getFighterImage());
-				program.add(bullet);
-				program.add(fighter.getFighterImage());
+				
+			for(int i=0; i<fighter.getBullet().getBullets().size(); i++) {
+				program.add(fighter.getBullet().getBullets().get(i));
 			}
 		}
-		otherSec++;
 	}
 	
 	//Moves the enemy toward the Fighter(temporary)
@@ -113,21 +111,14 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			
 		}
 		
-		//redEnemy.getRedEnemyImage().movePolar(4, 0);
-		redEnemy.attack(fighter);
-		//System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
+//		redEnemy.getRedEnemyImage().movePolar(4, 0);
+//		redEnemy.attack(fighter);
+//		System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 //		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
-//		blueEnemy.attack();
-//		blueEnemy.shoot(program);
+		blueEnemy.attack(program);
 		
-		//tests if the enemy hits the fighter
-//		if(fighter.intersects(redEnemy)) {
-//			fighter.setLives(fighter.getLives().size()-1);
-//			fighter.setFighterPosition(0, 0);
-//			System.out.print(fighter.getX() +", " + fighter.getY());
-//			
-//			//removes fighter from the game
+		//tests if the enemy hits the fighter and removes fighter
 			fighterHit();
 			
 //			fighter.getFighterImage().setVisible(false);
