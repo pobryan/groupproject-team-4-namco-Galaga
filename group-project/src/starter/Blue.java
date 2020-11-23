@@ -17,6 +17,7 @@ public class Blue extends enemy {
 	private space spaceToAttack, spaceToRetreat;
 	private boolean attacking, retreating;
 	private Bullet shoot;
+	private String bulletImage;
 	
 	
 	//constructors
@@ -30,7 +31,8 @@ public class Blue extends enemy {
 		setDegToShoot(0);
 		setSpaceToAttack(new space(0, 0));
 		setSpaceToRetreat(new space(0, 0));
-		shoot=new Bullet(0,0,-4);
+		bulletImage=new String("enemy bullet.png");
+		shoot=new Bullet(0,0,4, bulletImage);
 	}
 	
 	Blue(int x, int y, Fighter target){
@@ -38,6 +40,8 @@ public class Blue extends enemy {
 		this.setTarget(target);
 		blueEnemyImage = new GImage("Blue.png", x, y);
 		spaceToRetreat = new space(x, y);
+		bulletImage=new String("enemy bullet.png");
+		shoot=new Bullet(0,0,4, bulletImage);
 	}
 	
 	public void setBlueEnemyPosition(GImage i) {
@@ -79,7 +83,6 @@ public class Blue extends enemy {
 		}
 		System.out.println("degs: " + deg);
 		spaceToAttack = new space(randX, Y_HEIGHT);
-		shoot=new Bullet(tempX,tempY, -4);
 		return deg;
 	}
 	
@@ -91,9 +94,9 @@ public class Blue extends enemy {
 	}
 	
 	//TODO: calculates the degrees to shoot a bullet(toward the fighter)
-	public double calculateDegToShoot() {
-		return 0;
-	}
+//	public double calculateDegToShoot() {
+//		return 0;
+//	}
 	
 	public void attack() {
 		if( ( this.getY() == spaceToRetreat.getY() ) && (attacking == false && retreating == false)) {
@@ -119,7 +122,17 @@ public class Blue extends enemy {
 		}
 	}
 	
-	//getters
+	public void shoot(MainApplication program) {
+		shoot.addEnemyBullet(this.getX()+(45/2), this.getY()+45, program);
+		for(GImage bullet: shoot.getEnemyBullets()) {
+			program.add(bullet);
+		}
+	}
+	
+//getters
+	public Bullet getBullet() {
+		return shoot;
+	}
 	public Fighter getTarget() {
 		return target;
 	}

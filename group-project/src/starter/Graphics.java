@@ -116,7 +116,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 //		System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 //		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
-		blueEnemy.attack(program);
+		blueEnemy.attack();
+		if(numTimes % 40 == 0) {
+			blueEnemy.shoot(program);
+		}
 		
 		//tests if the enemy hits the fighter and removes fighter
 			fighterHit();

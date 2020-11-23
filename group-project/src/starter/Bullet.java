@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import acm.graphics.GImage;
 import acm.graphics.GObject;
+import acm.graphics.GRect;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -85,12 +86,10 @@ public class Bullet implements ActionListener{
 	}
 	
 	public void moveAllEnemyBullets() {
-		for(int i=0; i<enemyBullets.size(); i++) {
-			enemyBullet=enemyBullets.get(i);
-			
-			enemyBullet.move(0,speed);
-			removeEnemyBullet();
+		for(GImage enemy: enemyBullets) {			
+			enemy.move(0,speed);
 		}
+		removeEnemyBullet();
 	}
 	
 	//Remove bullet from bullets if it hits enemy/fighter or if it goes off screen
@@ -113,7 +112,7 @@ public class Bullet implements ActionListener{
 			
 			if(enemyBullet.getY()>(PROGRAM_HEIGHT+15) || (enemyElement!=null && enemyElement instanceof GImage)) {
 				program.remove(enemyBullet);
-				bullets.remove(i);
+				enemyBullets.remove(i);
 			}
 		}
 	}
@@ -121,7 +120,7 @@ public class Bullet implements ActionListener{
 //event methods
 	public void actionPerformed(ActionEvent e) {
 		moveAllBullets();
-//		moveAllEnemyBullets();
+		moveAllEnemyBullets();
 		numTimes++;
 	}
 	
