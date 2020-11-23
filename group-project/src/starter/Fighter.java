@@ -105,25 +105,14 @@ public class Fighter extends GRectangle{
 	}
 	
 	public void shoot(MainApplication program) {
-			shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY(), program);
+		shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY(), program);
 	}
 	
 	public void moveLeft() {
-		
+		fighterImage.move(-5, 0);
 	}
-	//how do I get this to interact 
-//	public void moveFighter(KeyEvent e) {
-//		char c = e.getKeyChar();
-//		int key = e.getKeyCode();
-//		if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-//			fighterImage = new GImage("Fighter.png", FIGHTER_POSITION_X+3, FIGHTER_POSITION_X);
-//		}
-//		if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-//			fighterImage = new GImage("Fighter.png", FIGHTER_POSITION_X-3, FIGHTER_POSITION_X);
-//		}
-//	}
 	
 	public void moveRight() {
-		
+		fighterImage.move(5, 0);
 	}
 }

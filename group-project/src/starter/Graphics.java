@@ -102,6 +102,12 @@ public class Graphics extends GraphicsPane implements ActionListener{
 				program.add(fighter.getBullet().getBullets().get(i));
 			}
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
+			fighter.moveRight();
+		}
+		else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			fighter.moveLeft();
+		}
 	}
 	
 	//Moves the enemy toward the Fighter(temporary)
