@@ -110,7 +110,7 @@ public class Bullet implements ActionListener{
 			enemyBullet=enemyBullets.get(i);
 			GObject enemyElement= program.getElementAt(enemyBullet.getX()+(WIDTH/2), enemyBullet.getY()-1);
 			
-			if(enemyBullet.getY()>(PROGRAM_HEIGHT+15) || (enemyElement!=null && enemyElement instanceof GImage)) {
+			if(enemyBullet.getY()>(PROGRAM_HEIGHT+15) || (enemyElement!=null && enemyElement instanceof GImage && 500 < enemyElement.getLocation().getY() && enemyElement.getLocation().getY() < 550)) {
 				program.remove(enemyBullet);
 				enemyBullets.remove(i);
 			}
