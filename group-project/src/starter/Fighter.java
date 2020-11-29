@@ -110,9 +110,11 @@ public class Fighter extends GRectangle{
 	
 	public void moveLeft() {
 		fighterImage.move(-5, 0);
+		this.setLocation(fighterImage.getX(), fighterImage.getY());
 	}
 	
 	public void moveRight() {
 		fighterImage.move(5, 0);
+		this.setLocation(fighterImage.getX(), fighterImage.getY());
 	}
 }

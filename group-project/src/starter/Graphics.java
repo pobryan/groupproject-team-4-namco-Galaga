@@ -118,7 +118,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		
 //		redEnemy.getRedEnemyImage().movePolar(4, 0);
-//		redEnemy.attack(fighter);
+		redEnemy.attack(fighter);
 //		System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
 //		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
 		
@@ -128,7 +128,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		
 		//tests if the enemy hits the fighter and removes fighter
-			fighterHit();
+	//		fighterHit();
 			
 //			fighter.getFighterImage().setVisible(false);
 //			fighter.getFighterImage().setLocation(0, 0);
