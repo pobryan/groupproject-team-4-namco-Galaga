@@ -1,8 +1,5 @@
 package starter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import java.util.ArrayList;
 import acm.graphics.GImage;
 
 public class Blue extends enemy {
@@ -17,7 +14,7 @@ public class Blue extends enemy {
 	private space spaceToAttack, spaceToRetreat;
 	private boolean attacking, retreating;
 	private Bullet shoot;
-	private String bulletImage;
+	private String bulletImage= "enemy bullet.png";
 	
 	
 	//constructors
@@ -31,7 +28,6 @@ public class Blue extends enemy {
 		setDegToShoot(0);
 		setSpaceToAttack(new space(0, 0));
 		setSpaceToRetreat(new space(0, 0));
-		bulletImage=new String("enemy bullet.png");
 		shoot=new Bullet(0,0,4, bulletImage);
 	}
 	
@@ -40,14 +36,11 @@ public class Blue extends enemy {
 		this.setTarget(target);
 		blueEnemyImage = new GImage("Blue.png", x, y);
 		spaceToRetreat = new space(x, y);
-		bulletImage=new String("enemy bullet.png");
 		shoot=new Bullet(0,0,4, bulletImage);
 	}
 	
 	public void setBlueEnemyPosition(GImage i) {
-		double imageX = i.getX();
-		double imageY = i.getY();
-		this.setLocation(imageX, imageY);
+		this.setLocation(i.getX(), i.getY());
 	}
 	
 	public void setBlueEnemyPosition(double x, double y) {
@@ -55,10 +48,6 @@ public class Blue extends enemy {
 		blueEnemyImage.setLocation(x, y);
 	}
 	
-	public void runBlue() {
-		getBlueEnemyImage();
-	}
-
 	//methods
 	
 	//creates a random angle for the blue enemy to travel
@@ -122,11 +111,9 @@ public class Blue extends enemy {
 		}
 	}
 	
-	public void shoot(MainApplication program) {
-		shoot.addEnemyBullet(this.getX()+(45/2), this.getY()+45, program);
-		for(GImage bullet: shoot.getEnemyBullets()) {
-			program.add(bullet);
-		}
+	public void shoot(MainApplication program, Graphics screen) {
+		this.setLocation(blueEnemyImage.getX(), blueEnemyImage.getY());
+		shoot.addEnemyBullet(this.getX()+(45/2), this.getY()+45, program, screen);
 	}
 	
 //getters

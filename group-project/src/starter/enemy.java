@@ -18,6 +18,17 @@ public class enemy extends GRectangle{
 	//true if an enemy is currently moving
 	boolean moving;
 	
+//Getters
+	public boolean getAlive() {
+		return alive;
+	}
+		
+//Setters
+	public void setAlive(Boolean alive) {
+		this.alive=alive;
+	}
+		
+//Constructors
 	enemy(){
 		//start = new space(0, 0);
 		speed = 0;
@@ -27,11 +38,6 @@ public class enemy extends GRectangle{
 		//start = new space(x, y);
 		this.speed=speed;
 		eType=type;
-	}
-	
-	//TODO: Finish this method. This method should check if the enemy was hit.
-	public boolean isEnemyDead(){
-		return true;
 	}
 	
 	//TODO: Finish this method. It needs to use Bullet to fire at Fighter.
@@ -61,5 +67,4 @@ public class enemy extends GRectangle{
 	public enemyType getEnemyType() {
 		return eType;
 	}
-	
 }
