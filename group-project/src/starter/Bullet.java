@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 
 public class Bullet implements ActionListener{
 	private MainApplication program;
+	private Graphics screen;
 	
 	public static final int PROGRAM_HEIGHT = 600;
 	public static final int WIDTH = 5;
@@ -21,10 +22,11 @@ public class Bullet implements ActionListener{
 	
 	private space start;
 	private int speed, numTimes=0;
-	private GImage bullet, enemyBullet;
+	private GImage bullet;
 	private String image;
 	private ArrayList<GImage> bullets, enemyBullets;
 	private Timer movement;
+	private Fighter fighter;
 	
 //Constructor
 	Bullet(double x, double y, int speed, String image){
@@ -49,6 +51,7 @@ public class Bullet implements ActionListener{
 	public ArrayList<GImage> getEnemyBullets(){
 		return enemyBullets;
 	}
+	
 //Setters
 	public void setStart(int x, int y) {
 		start.setX(x);
@@ -64,20 +67,30 @@ public class Bullet implements ActionListener{
 		return tempBullet;
 	}
 	
-	//Adds bullets on screen
-	public void addBullet(double x, double y,MainApplication program) {
-		this.program=program;
-		bullet= makeBullet(x,y);
-		bullets.add(bullet);
+	//Adds fighter bullets on screen
+	public void addBullet(double x, double y, MainApplication program, Graphics screen) {
+		if(numTimes % 5 == 0) {
+			this.program=program;
+			this.screen=screen;
+			bullet= makeBullet(x,y);
+			bullets.add(bullet);
+			program.add(bullet);
+			program.add(bullet);
+		}
  	}
 	
-	public void addEnemyBullet(double x, double y, MainApplication program) {
-		this.program=program;
-		enemyBullet= makeBullet(x,y);
-		enemyBullets.add(enemyBullet);
+	//Adds enemy bullets on screen
+	public void addEnemyBullet(double x, double y, MainApplication program,Graphics screen) {
+		if(numTimes % 40 == 0 ) {
+			this.program=program;
+			this.screen=screen;
+			bullet= makeBullet(x,y);
+			enemyBullets.add(bullet);
+			program.add(bullet);
+		}
 	}
 	
-	//Continuously moves all bullets on screen with actionPerformed 
+	//Continuously moves all fighter bullets on screen with actionPerformed 
 	public void moveAllBullets() {
 		for(GImage bullet: bullets) {
 			bullet.move(0, speed);
@@ -85,6 +98,7 @@ public class Bullet implements ActionListener{
 		removeBullet();
 	}
 	
+	//Continuously moves all enemy bullets on screen with actionPerformed
 	public void moveAllEnemyBullets() {
 		for(GImage enemy: enemyBullets) {			
 			enemy.move(0,speed);
@@ -92,29 +106,49 @@ public class Bullet implements ActionListener{
 		removeEnemyBullet();
 	}
 	
-	//Remove bullet from bullets if it hits enemy/fighter or if it goes off screen
+	//Remove fighter bullet from bullets if it hits enemy/fighter or if it goes off screen
 	public void removeBullet() {
 		for(int i=0; i<bullets.size(); i++) {
 			bullet= bullets.get(i);
-			GObject fighterElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);
+			GObject enemyElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);
 			
-			if(bullet.getY()<-15 || (fighterElement!=null && fighterElement instanceof GImage)) {
+			if(bullet.getY()<-15) {
 				program.remove(bullet);
+				bullets.remove(i);
+			}
+			else if(enemyElement != null && enemyElement instanceof GImage && enemyElement.getWidth() == 45 && enemyElement.isVisible()) {
+				program.remove(bullet);
+				enemyElement.setVisible(false);
+				screen.enemyHit();
+				program.remove(enemyElement);
 				bullets.remove(i);
 			}
 		}
 	}
 	
+	//Remove enemy bullet from bullets if it hits enemy/fighter or if it goes off screen
 	public void removeEnemyBullet() {
 		for(int i=0; i<enemyBullets.size(); i++) {
-			enemyBullet=enemyBullets.get(i);
-			GObject enemyElement= program.getElementAt(enemyBullet.getX()+(WIDTH/2), enemyBullet.getY()-1);
+			bullet=enemyBullets.get(i);
+			GObject fighterElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);
 			
-			if(enemyBullet.getY()>(PROGRAM_HEIGHT+15) || (enemyElement!=null && enemyElement instanceof GImage && 500 < enemyElement.getLocation().getY() && enemyElement.getLocation().getY() < 550)) {
-				program.remove(enemyBullet);
+			if(bullet.getY()>(PROGRAM_HEIGHT+15)) {
+				program.remove(bullet);
+				enemyBullets.remove(i);
+			}
+			else if(fighterElement != null && fighterElement instanceof GImage && fighterElement.getWidth()==46 && fighterElement.isVisible()) {
+				program.remove(bullet);
+				fighterElement.setVisible(false);
+				screen.bulletHit();
 				enemyBullets.remove(i);
 			}
 		}
+	}
+	
+	//removes all bullets on screen
+	public void removeAllBullets() {
+		bullets.clear();
+		enemyBullets.clear();
 	}
 	
 //event methods
@@ -123,11 +157,4 @@ public class Bullet implements ActionListener{
 		moveAllEnemyBullets();
 		numTimes++;
 	}
-	
-//	public void run() {
-//		bullets= new ArrayList<GRect>();
-//		movement= new Timer(MS, listener);
-//		movement.start();
-//	}
 }
-

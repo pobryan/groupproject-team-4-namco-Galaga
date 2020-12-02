@@ -5,15 +5,16 @@ public class MainApplication extends GraphicsApplication {
 //	public static final String MUSIC_FOLDER = "sounds";
 //	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
-	private MenuPane menu;
+	private Menu menu;
 	private Graphics graphics;
+//	private Stage stage;
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	}
 
 	public void run() {
-		menu = new MenuPane(this);
+		menu = new Menu(this);
 		graphics=new Graphics(this);
 		switchToGraphics();
 	}
@@ -25,4 +26,8 @@ public class MainApplication extends GraphicsApplication {
 	public void switchToMenu() {
 		switchToScreen(menu);
 	}
+	
+//	public void switchToNewStage() {
+//		switchToScreen(stage);
+//	}
 }

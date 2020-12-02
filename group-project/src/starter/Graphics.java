@@ -28,8 +28,9 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	private static final int LIVES_X = 0;
 	private static final int LIVES_Y = 550;
 	
-	private int numTimes=0;
-	private GLabel restart;
+	private int numTimes=0, score=0;
+	private GLabel restart, scoreTotal, SCORE;
+	private Timer gameTimer;
 	
 	//to test
 	private Red redEnemy;
@@ -44,18 +45,30 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		restart= new GLabel("READY", PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
 		restart.setColor(Color.cyan);
 		restart.setFont(new Font("Consolas",Font.BOLD, 30));
+		restart.setVisible(false);
+		
+		scoreTotal= new GLabel(""+score, 20,30);
+		scoreTotal.setColor(Color.cyan);
+		scoreTotal.setFont(new Font("Consolas",Font.PLAIN, 20));
+		
+		SCORE= new GLabel("SCORE", 10, 15);
+		SCORE.setColor(Color.cyan);
+		SCORE.setFont(new Font("Consolas",Font.PLAIN, 15));
 		
 		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
-		fighter.setSize(ENTITY_SIZE, ENTITY_SIZE);
-		fighter.getFighterImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		fighter.setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		fighter.getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		fighter.getFighterImage().setVisible(true);
 		
 		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
-		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
 		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+		redEnemy.getRedEnemyImage().setVisible(true);
 
 		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
-		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
 		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+		blueEnemy.getBlueEnemyImage().setVisible(true);
 		
 //		greenEnemy = new Green(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
 //		greenEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
@@ -65,7 +78,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		redEnemy.setRedTarget(fighter);
 		
 		//initializes and starts the timer
-		Timer gameTimer = new Timer(DELAY_MS, this);
+		gameTimer = new Timer(DELAY_MS, this);
 		gameTimer.start();
 	}
 	
@@ -73,6 +86,9 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	@Override
 	public void showContents() {
 		program.setBackground(Color.black);
+		program.add(restart);
+		program.add(scoreTotal);
+		program.add(SCORE);
 		program.add(fighter.getFighterImage());
 		program.add(redEnemy.getRedEnemyImage());
 		program.add(blueEnemy.getBlueEnemyImage());
@@ -86,21 +102,17 @@ public class Graphics extends GraphicsPane implements ActionListener{
 
 	@Override
 	public void hideContents() {
-		program.remove(fighter.getFighterImage());
-		program.remove(redEnemy.getRedEnemyImage());
-		for(GImage life:fighter.getLives()) {
-			program.remove(life);
-		}
+		program.removeAll();
+		gameTimer.stop();
+		
+		fighter.getBullet().removeAllBullets();
+		blueEnemy.getBullet().removeAllBullets();
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
-			fighter.shoot(program);
-				
-			for(int i=0; i<fighter.getBullet().getBullets().size(); i++) {
-				program.add(fighter.getBullet().getBullets().get(i));
-			}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE && fighter.getFighterImage().isVisible()) {
+			fighter.shoot(program, this);
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			fighter.moveRight();
@@ -108,36 +120,31 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			fighter.moveLeft();
 		}
+		else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			program.switchToMenu();
+		}
 	}
 	
 	//Moves the enemy toward the Fighter(temporary)
 	public void actionPerformed(ActionEvent e) {
-		//TODO: Meant to make the enemy start moving once every 2.5(x) seconds.
-		if(numTimes % 2500 == 0) {
-			
+		if(!restart.isVisible() && fighter.getFighterImage().isVisible()) {
+				if(blueEnemy.getBlueEnemyImage().isVisible()) {
+					blueEnemy.attack();
+					blueEnemy.shoot(program, this);
+				}
+				if(redEnemy.getRedEnemyImage().isVisible()) {
+					redEnemy.setRedTarget(fighter);
+					redEnemy.attack(fighter);
+				}
+			fighterHit();
 		}
 		
-//		redEnemy.getRedEnemyImage().movePolar(4, 0);
-		redEnemy.attack(fighter);
-//		System.out.println("fighter x: " + fighter.getX() + ", y: " + fighter.getY());
-//		System.out.println("red enemy x: " + redEnemy.getX() + ", y: " + redEnemy.getY());
-		
-		blueEnemy.attack();
-		if(numTimes % 40 == 0) {
-			blueEnemy.shoot(program);
-		}
-		
-		//tests if the enemy hits the fighter and removes fighter
-	//		fighterHit();
-			
-//			fighter.getFighterImage().setVisible(false);
-//			fighter.getFighterImage().setLocation(0, 0);
-//		}
-		
-		if(redEnemy.getY() == fighter.getY()) {
-			//build a function 
+		else if(restart.isVisible() && numTimes % 100 == 0) {
+			fighter.getFighterImage().setVisible(true);
+			restart.setVisible(false);
 		}
 		numTimes++;
+		scoreTotal.setLabel(""+score);
 	}
 	
 	//TODO: draws the Galaga background
@@ -145,7 +152,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		
 	}
 	
-	public void drawEnemy(enemy e) {
+	public void drawEnemy() {
 		
 	}
 	
@@ -160,24 +167,31 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		
 	}
 	
+	public void enemyHit() {
+		if(!blueEnemy.getBlueEnemyImage().isVisible()) {
+			score+=400;
+		}
+		else if(!redEnemy.getRedEnemyImage().isVisible()) {
+			score+=500;
+		}
+	}
+	
+	public void bulletHit() {
+		program.remove(fighter.getLives().get(fighter.getLives().size()-1));
+		fighter.loseLife();
+		
+		restart.setVisible(true);
+		fighter.setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+	}
+	
 	public void fighterHit() {
 		if(fighter.isFighterHit(redEnemy)) {
-			program.remove(fighter.getFighterImage());
+			fighter.getFighterImage().setVisible(false);
 			program.remove(fighter.getLives().get(fighter.getLives().size()-1));
 			fighter.loseLife();
 			
-//			if(numTimes % 5 == 0) {
-//				ready();
-//				program.add(restart);
-//			}
-//			else if(numTimes % 20 == 0) {
-//				fighter.setFighterPosition(FIGHTER_X, FIGHTER_Y);
-				fighter.setFighterPosition(50, 50);
-				program.add(fighter.getFighterImage());
-//			}
-//			for(int i=numTimes % 10; numTimes<numTimes % 50;i=numTimes % 10) {
-//				program.add(restart);
-//			}
+			restart.setVisible(true);
+			fighter.setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
 		}
 	}
 }

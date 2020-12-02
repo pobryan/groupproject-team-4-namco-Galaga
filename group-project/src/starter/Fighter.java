@@ -97,15 +97,15 @@ public class Fighter extends GRectangle{
 	}
 	
 	public boolean isFighterHit(Red red) {
-		if(this.intersects(red)) {
+		if(this.intersects(red) && fighterImage.isVisible()) {
 			System.out.print("Lives: "+lives.size());
 			return true;
 		}
 		return false; 
 	}
 	
-	public void shoot(MainApplication program) {
-		shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY(), program);
+	public void shoot(MainApplication program, Graphics screen) {
+		shoot.addBullet(this.getLocation().getX()+FIGHTER_MID, this.getLocation().getY(), program, screen);
 	}
 	
 	public void moveLeft() {
