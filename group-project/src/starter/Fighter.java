@@ -115,7 +115,7 @@ public class Fighter extends GRectangle{
 			fighterImage.move(-5, 0);
 			this.setLocation(fighterImage.getX(), fighterImage.getY());
 	}
-	
+	//added borders
 	public void moveRight() {
 		if (fighterImage.getX() + 55 > PROGRAM_WIDTH)
 			fighterImage.move(0, 0);
