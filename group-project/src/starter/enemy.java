@@ -34,9 +34,8 @@ public class enemy extends GRectangle{
 		speed = 0;
 	}
 	
-	enemy(int x, int y, double speed, enemyType type) {
-		//start = new space(x, y);
-		this.speed=speed;
+	enemy(int x, int y, enemyType type) {
+		this.setLocation(x, y);
 		eType=type;
 	}
 	

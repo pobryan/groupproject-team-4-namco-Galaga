@@ -33,10 +33,11 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	private Timer gameTimer;
 	
 	//to test
-	private Red redEnemy;
-	private Blue blueEnemy;
+	//private Red redEnemy;
+	//private Blue blueEnemy;
 	private Green greenEnemy;
-	private Fighter fighter;
+	private Stage stage;
+	//private Fighter fighter;
 	
 //Constructor
 	public Graphics(MainApplication app) {
@@ -55,27 +56,43 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		SCORE.setColor(Color.cyan);
 		SCORE.setFont(new Font("Consolas",Font.PLAIN, 15));
 		
-		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
+//		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
 //		fighter.setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-		fighter.getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-		fighter.getFighterImage().setVisible(true);
+//		fighter.getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+//		fighter.getFighterImage().setVisible(true);
 		
-		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
+//		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
 //		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-		redEnemy.getRedEnemyImage().setVisible(true);
+//		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		redEnemy.getRedEnemyImage().setVisible(true);
 
-		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
+//		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
 //		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-		blueEnemy.getBlueEnemyImage().setVisible(true);
+//		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+//		blueEnemy.getBlueEnemyImage().setVisible(true);
 		
 //		greenEnemy = new Green(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
 //		greenEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
 //		greenEnemy.getGreenEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 		
 		//sets the target and direction for the enemy to travel
-		redEnemy.setRedTarget(fighter);
+//		redEnemy.setRedTarget(fighter);
+		stage = new Stage();
+		stage.setUpStage();
+		stage.getBoard().getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		stage.getBoard().getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		
+		for(Red it: stage.getBoard().getRedEnemyList()) {
+			it.setSize(ENTITY_SIZE, ENTITY_SIZE);
+			it.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+			it.getRedEnemyImage().setVisible(true);
+		}
+		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+			it.setSize(ENTITY_SIZE, ENTITY_SIZE);
+			it.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
+			it.getBlueEnemyImage().setVisible(true);
+		}
+		
 		
 		//initializes and starts the timer
 		gameTimer = new Timer(DELAY_MS, this);
@@ -89,11 +106,15 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.add(restart);
 		program.add(scoreTotal);
 		program.add(SCORE);
-		program.add(fighter.getFighterImage());
-		program.add(redEnemy.getRedEnemyImage());
-		program.add(blueEnemy.getBlueEnemyImage());
+		program.add(stage.getBoard().getFighter().getFighterImage());
+		for(Red it: stage.getBoard().getRedEnemyList()) {
+			program.add(it.getRedEnemyImage());
+		}
+		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+			program.add(it.getBlueEnemyImage());
+		}
 		int space=5;
-		for(GImage life:fighter.getLives()) {
+		for(GImage life:stage.getBoard().getFighter().getLives()) {
 			life.setLocation(LIVES_X+space, LIVES_Y);
 			program.add(life);
 			space=ENTITY_SIZE+space+5;
@@ -105,20 +126,23 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.removeAll();
 		gameTimer.stop();
 		
-		fighter.getBullet().removeAllBullets();
-		blueEnemy.getBullet().removeAllBullets();
+		stage.getBoard().getFighter().getBullet().removeAllBullets();
+//		blueEnemy.getBullet().removeAllBullets();
+		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+			it.getBullet().removeAllBullets();
+		}
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE && fighter.getFighterImage().isVisible()) {
-			fighter.shoot(program, this);
+		if(e.getKeyCode()==KeyEvent.VK_SPACE && stage.getBoard().getFighter().getFighterImage().isVisible()) {
+			stage.getBoard().getFighter().shoot(program, this);
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			fighter.moveRight();
+			stage.getBoard().getFighter().moveRight();
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			fighter.moveLeft();
+			stage.getBoard().getFighter().moveLeft();
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			program.switchToMenu();
@@ -127,20 +151,38 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	//Moves the enemy toward the Fighter(temporary)
 	public void actionPerformed(ActionEvent e) {
-		if(!restart.isVisible() && fighter.getFighterImage().isVisible()) {
-				if(blueEnemy.getBlueEnemyImage().isVisible()) {
-					blueEnemy.attack();
-					blueEnemy.shoot(program, this);
+		boolean blueVis = false;
+		boolean redVis = false;
+		if(!restart.isVisible() && stage.getBoard().getFighter().getFighterImage().isVisible()) {
+			for(Blue it: stage.getBoard().getBlueEnemyList()) {
+				if(it.getBlueEnemyImage().isVisible()) {
+					blueVis = true;
+					//blueEnemy.shoot(program, this);
+					it.shoot(program, this);
 				}
-				if(redEnemy.getRedEnemyImage().isVisible()) {
-					redEnemy.setRedTarget(fighter);
-					redEnemy.attack(fighter);
+			}
+			if(blueVis == true) {
+				stage.getBoard().blueEnemiesAttack();
+				blueVis = false;
+			}
+			for(Blue it: stage.getBoard().getBlueEnemyList()) {
+				it.shoot(program, this);
+			}
+			for(Red it: stage.getBoard().getRedEnemyList()) {
+				if(it.getRedEnemyImage().isVisible()) {
+					//redEnemy.setRedTarget(fighter);
+					redVis = true;
 				}
+			}
+			if(redVis == true) {
+				stage.getBoard().redEnemiesAttack();
+				redVis = false;
+			}
 			fighterHit();
 		}
 		
 		else if(restart.isVisible() && numTimes % 100 == 0) {
-			fighter.getFighterImage().setVisible(true);
+			stage.getBoard().getFighter().getFighterImage().setVisible(true);
 			restart.setVisible(false);
 		}
 		numTimes++;
@@ -168,30 +210,37 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	}
 	
 	public void enemyHit() {
-		if(!blueEnemy.getBlueEnemyImage().isVisible()) {
-			score+=400;
+		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+			if(!it.getBlueEnemyImage().isVisible()) {
+				score+=400;
+			}
 		}
-		else if(!redEnemy.getRedEnemyImage().isVisible()) {
-			score+=500;
+		for(Red it: stage.getBoard().getRedEnemyList()) {
+			if(!it.getRedEnemyImage().isVisible()) {
+				score+=500;
+			}
 		}
 	}
 	
 	public void bulletHit() {
-		program.remove(fighter.getLives().get(fighter.getLives().size()-1));
-		fighter.loseLife();
+		program.remove(stage.getBoard().getFighter().getLives().get(stage.getBoard().getFighter().getLives().size()-1));
+		stage.getBoard().getFighter().loseLife();
 		
 		restart.setVisible(true);
-		fighter.setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+		stage.getBoard().getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
 	}
 	
 	public void fighterHit() {
-		if(fighter.isFighterHit(redEnemy)) {
-			fighter.getFighterImage().setVisible(false);
-			program.remove(fighter.getLives().get(fighter.getLives().size()-1));
-			fighter.loseLife();
-			
-			restart.setVisible(true);
-			fighter.setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+		for(Red it: stage.getBoard().getRedEnemyList()) {
+			if(stage.getBoard().getFighter().isFighterHit(it)) {
+				stage.getBoard().getFighter().getFighterImage().setVisible(false);
+				program.remove(stage.getBoard().getFighter().getLives().get(stage.getBoard().getFighter().getLives().size()-1));
+				stage.getBoard().getFighter().loseLife();
+				
+				
+				restart.setVisible(true);
+				stage.getBoard().getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+			}
 		}
 	}
 }

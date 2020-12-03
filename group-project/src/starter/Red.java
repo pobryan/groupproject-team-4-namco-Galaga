@@ -62,10 +62,10 @@ public class Red extends enemy{
 		return newDeg;
 	}
 	
-	public void attack(Fighter f) {
+	public void attack() {
 		if( ( this.getY() == spaceToRetreat.getY() ) && (attacking == false && retreating == false)) {
 			degToAttack = calculateDegToAttack();
-			target = f;
+			//target = f;
 			attacking = true;
 		}
 		if( ( this.getY() >= spaceToAttack.getY() ) && (attacking == true && retreating == false)){
