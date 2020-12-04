@@ -47,6 +47,18 @@ public class Stage {
 		return board;
 	}
 	
+	public Fighter getFighter() {
+		return board.getFighter();
+	}
+	
+	public ArrayList<Red> getRedEnemyList() {
+		return board.getRedEnemyList();
+	}
+	
+	public ArrayList<Blue> getBlueEnemyList() {
+		return board.getBlueEnemyList();
+	}
+	
 	public boolean isEnemyDead() {
 		return false;
 	}

@@ -16,7 +16,7 @@ public class Fighter extends GRectangle{
 	//add a GImage
 	private GImage fighterImage;
 	private String bulletImage;
-	
+	boolean invincible;
 	
 //Getters
 	public ArrayList<GImage> getLives() {
@@ -36,6 +36,10 @@ public class Fighter extends GRectangle{
 		return shoot;
 	}
 	
+	public boolean isInvincible() {
+		return invincible;
+	}
+	
 	//Setters
 //	public void setFighterPosition(GImage i) {
 //		double imageX = i.getX();
@@ -52,6 +56,10 @@ public class Fighter extends GRectangle{
 		this.lives = new ArrayList<GImage>(lives);
 	}
 	
+	public void setInvincible(boolean i) {
+		invincible = i;
+	}
+	
 	//Constructors
 	Fighter(){
 		//position = new space(0, 0);
@@ -66,6 +74,7 @@ public class Fighter extends GRectangle{
 			lives.add(life);
 		}
 		shoot=new Bullet(0,0,-4,bulletImage);
+		invincible = true;
 	}
 	
 	Fighter(int x, int y, /*space p,*/ int l){
@@ -81,6 +90,7 @@ public class Fighter extends GRectangle{
 			lives.add(life);
 		}
 		shoot=new Bullet(x,y,-4, bulletImage);
+		invincible = true;
 	}
 	
 	//Methods

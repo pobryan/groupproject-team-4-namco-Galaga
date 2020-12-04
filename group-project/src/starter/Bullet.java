@@ -136,10 +136,11 @@ public class Bullet implements ActionListener{
 				program.remove(bullet);
 				enemyBullets.remove(i);
 			}
-			else if(fighterElement != null && fighterElement instanceof GImage && fighterElement.getWidth()==46 && fighterElement.isVisible()) {
+			else if(fighterElement != null && fighterElement instanceof GImage && fighterElement.getWidth()==46 && fighterElement.isVisible() && !screen.getStage().getFighter().isInvincible()) {
 				program.remove(bullet);
 				fighterElement.setVisible(false);
 				screen.bulletHit();
+				screen.getStage().getFighter().setInvincible(true);
 				enemyBullets.remove(i);
 			}
 		}

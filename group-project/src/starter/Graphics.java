@@ -28,7 +28,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	private static final int LIVES_X = 0;
 	private static final int LIVES_Y = 550;
 	
-	private int numTimes=0, score=0;
+	private int numTimes=0, score=0, invincibleClock = 0;
 	private GLabel restart, scoreTotal, SCORE;
 	private Timer gameTimer;
 	
@@ -79,15 +79,15 @@ public class Graphics extends GraphicsPane implements ActionListener{
 //		redEnemy.setRedTarget(fighter);
 		stage = new Stage();
 		stage.setUpStage();
-		stage.getBoard().getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-		stage.getBoard().getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 		
-		for(Red it: stage.getBoard().getRedEnemyList()) {
+		for(Red it: stage.getRedEnemyList()) {
 			it.setSize(ENTITY_SIZE, ENTITY_SIZE);
 			it.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 			it.getRedEnemyImage().setVisible(true);
 		}
-		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+		for(Blue it: stage.getBlueEnemyList()) {
 			it.setSize(ENTITY_SIZE, ENTITY_SIZE);
 			it.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
 			it.getBlueEnemyImage().setVisible(true);
@@ -106,15 +106,15 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.add(restart);
 		program.add(scoreTotal);
 		program.add(SCORE);
-		program.add(stage.getBoard().getFighter().getFighterImage());
-		for(Red it: stage.getBoard().getRedEnemyList()) {
+		program.add(stage.getFighter().getFighterImage());
+		for(Red it: stage.getRedEnemyList()) {
 			program.add(it.getRedEnemyImage());
 		}
-		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+		for(Blue it: stage.getBlueEnemyList()) {
 			program.add(it.getBlueEnemyImage());
 		}
 		int space=5;
-		for(GImage life:stage.getBoard().getFighter().getLives()) {
+		for(GImage life:stage.getFighter().getLives()) {
 			life.setLocation(LIVES_X+space, LIVES_Y);
 			program.add(life);
 			space=ENTITY_SIZE+space+5;
@@ -126,23 +126,23 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		program.removeAll();
 		gameTimer.stop();
 		
-		stage.getBoard().getFighter().getBullet().removeAllBullets();
+		stage.getFighter().getBullet().removeAllBullets();
 //		blueEnemy.getBullet().removeAllBullets();
-		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+		for(Blue it: stage.getBlueEnemyList()) {
 			it.getBullet().removeAllBullets();
 		}
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE && stage.getBoard().getFighter().getFighterImage().isVisible()) {
-			stage.getBoard().getFighter().shoot(program, this);
+		if(e.getKeyCode()==KeyEvent.VK_SPACE && stage.getFighter().getFighterImage().isVisible()) {
+			stage.getFighter().shoot(program, this);
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			stage.getBoard().getFighter().moveRight();
+			stage.getFighter().moveRight();
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			stage.getBoard().getFighter().moveLeft();
+			stage.getFighter().moveLeft();
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			program.switchToMenu();
@@ -153,22 +153,24 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		boolean blueVis = false;
 		boolean redVis = false;
-		if(!restart.isVisible() && stage.getBoard().getFighter().getFighterImage().isVisible()) {
-			for(Blue it: stage.getBoard().getBlueEnemyList()) {
+		if(!restart.isVisible() && stage.getFighter().getFighterImage().isVisible()) {
+			for(Blue it: stage.getBlueEnemyList()) {
 				if(it.getBlueEnemyImage().isVisible()) {
 					blueVis = true;
 					//blueEnemy.shoot(program, this);
-					it.shoot(program, this);
+					//it.shoot(program, this);
 				}
 			}
 			if(blueVis == true) {
 				stage.getBoard().blueEnemiesAttack();
 				blueVis = false;
 			}
-			for(Blue it: stage.getBoard().getBlueEnemyList()) {
-				it.shoot(program, this);
+			if(!restart.isVisible() && stage.getFighter().getFighterImage().isVisible()) {
+				for(Blue it: stage.getBlueEnemyList()) {
+					it.shoot(program, this);
+				}
 			}
-			for(Red it: stage.getBoard().getRedEnemyList()) {
+			for(Red it: stage.getRedEnemyList()) {
 				if(it.getRedEnemyImage().isVisible()) {
 					//redEnemy.setRedTarget(fighter);
 					redVis = true;
@@ -179,11 +181,17 @@ public class Graphics extends GraphicsPane implements ActionListener{
 				redVis = false;
 			}
 			fighterHit();
+			if(stage.getFighter().isInvincible()) {
+				invincibleClock++;
+			}
 		}
 		
 		else if(restart.isVisible() && numTimes % 100 == 0) {
-			stage.getBoard().getFighter().getFighterImage().setVisible(true);
+			stage.getFighter().getFighterImage().setVisible(true);
 			restart.setVisible(false);
+		}
+		if(invincibleClock % 175 == 0) {
+			stage.getFighter().setInvincible(false);
 		}
 		numTimes++;
 		scoreTotal.setLabel(""+score);
@@ -210,12 +218,12 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	}
 	
 	public void enemyHit() {
-		for(Blue it: stage.getBoard().getBlueEnemyList()) {
+		for(Blue it: stage.getBlueEnemyList()) {
 			if(!it.getBlueEnemyImage().isVisible()) {
 				score+=400;
 			}
 		}
-		for(Red it: stage.getBoard().getRedEnemyList()) {
+		for(Red it: stage.getRedEnemyList()) {
 			if(!it.getRedEnemyImage().isVisible()) {
 				score+=500;
 			}
@@ -223,24 +231,29 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	}
 	
 	public void bulletHit() {
-		program.remove(stage.getBoard().getFighter().getLives().get(stage.getBoard().getFighter().getLives().size()-1));
-		stage.getBoard().getFighter().loseLife();
+		program.remove(stage.getFighter().getLives().get(stage.getFighter().getLives().size()-1));
+		stage.getFighter().loseLife();
 		
 		restart.setVisible(true);
-		stage.getBoard().getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+		stage.getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
 	}
 	
 	public void fighterHit() {
-		for(Red it: stage.getBoard().getRedEnemyList()) {
-			if(stage.getBoard().getFighter().isFighterHit(it)) {
-				stage.getBoard().getFighter().getFighterImage().setVisible(false);
-				program.remove(stage.getBoard().getFighter().getLives().get(stage.getBoard().getFighter().getLives().size()-1));
-				stage.getBoard().getFighter().loseLife();
+		for(Red it: stage.getRedEnemyList()) {
+			if(stage.getFighter().isFighterHit(it) && !stage.getFighter().isInvincible()) {
+				stage.getFighter().getFighterImage().setVisible(false);
+				program.remove(stage.getFighter().getLives().get(stage.getFighter().getLives().size()-1));
+				stage.getFighter().loseLife();
 				
 				
 				restart.setVisible(true);
-				stage.getBoard().getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+				stage.getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+				stage.getFighter().setInvincible(true);
 			}
 		}
+	}
+	
+	public Stage getStage() {
+		return stage;
 	}
 }
