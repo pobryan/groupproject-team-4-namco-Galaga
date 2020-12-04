@@ -13,6 +13,7 @@ public class MainApplication extends GraphicsApplication {
 
 	private Menu menu;
 	private Graphics graphics;
+	private GameOver gameOver;
 //	private Stage stage;
 
 	public void init() {
@@ -22,6 +23,7 @@ public class MainApplication extends GraphicsApplication {
 	public void run() {
 		menu = new Menu(this);
 		graphics=new Graphics(this);
+		gameOver= new GameOver(this);
 		switchToGraphics();
 	}
 	
@@ -31,6 +33,10 @@ public class MainApplication extends GraphicsApplication {
 
 	public void switchToMenu() {
 		switchToScreen(menu);
+	}
+	
+	public void switchToGameOver() {
+		switchToScreen(gameOver);
 	}
 	
 //	public void switchToNewStage() {

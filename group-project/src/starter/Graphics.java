@@ -195,6 +195,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 		numTimes++;
 		scoreTotal.setLabel(""+score);
+		GameOver();
 	}
 	
 	//TODO: draws the Galaga background
@@ -215,6 +216,12 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	//TODO: draws the user's current score in the top left.
 	public void drawScore() {
 		
+	}
+	
+	public void GameOver() {
+		if(stage.getBoard().getFighter().isLivesEmpty()) {
+			program.switchToGameOver();
+		}
 	}
 	
 	public void enemyHit() {
