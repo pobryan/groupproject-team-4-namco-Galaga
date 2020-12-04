@@ -11,6 +11,8 @@ public class MainApplication extends GraphicsApplication {
 //	public static final String MUSIC_FOLDER = "sounds";
 //	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
+	
+	private int finalScore;
 	private Menu menu;
 	private Graphics graphics;
 	private GameOver gameOver;
@@ -37,6 +39,14 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToGameOver() {
 		switchToScreen(gameOver);
+	}
+	
+	public int getScore() {
+		return finalScore;
+	}
+	
+	public void setScore(int s) {
+		finalScore=s;
 	}
 	
 //	public void switchToNewStage() {

@@ -32,12 +32,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	private GLabel restart, scoreTotal, SCORE;
 	private Timer gameTimer;
 	
-	//to test
-	//private Red redEnemy;
-	//private Blue blueEnemy;
-	private Green greenEnemy;
 	private Stage stage;
-	//private Fighter fighter;
 	
 //Constructor
 	public Graphics(MainApplication app) {
@@ -55,28 +50,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		SCORE= new GLabel("SCORE", 10, 15);
 		SCORE.setColor(Color.cyan);
 		SCORE.setFont(new Font("Consolas",Font.PLAIN, 15));
-		
-//		fighter = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
-//		fighter.setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-//		fighter.getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-//		fighter.getFighterImage().setVisible(true);
-		
-//		redEnemy = new Red(RED_ENEMY_X, RED_ENEMY_Y, fighter);
-//		redEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-//		redEnemy.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-//		redEnemy.getRedEnemyImage().setVisible(true);
 
-//		blueEnemy = new Blue(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
-//		blueEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-//		blueEnemy.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-//		blueEnemy.getBlueEnemyImage().setVisible(true);
-		
-//		greenEnemy = new Green(BLUE_ENEMY_X, BLUE_ENEMY_Y, fighter);
-//		greenEnemy.setSize(ENTITY_SIZE, ENTITY_SIZE);
-//		greenEnemy.getGreenEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-		
-		//sets the target and direction for the enemy to travel
-//		redEnemy.setRedTarget(fighter);
 		stage = new Stage();
 		stage.setUpStage();
 		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
@@ -93,10 +67,8 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			it.getBlueEnemyImage().setVisible(true);
 		}
 		
-		
-		//initializes and starts the timer
+		//initializes timer
 		gameTimer = new Timer(DELAY_MS, this);
-		gameTimer.start();
 	}
 	
 
@@ -119,15 +91,16 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			program.add(life);
 			space=ENTITY_SIZE+space+5;
 		}
+		gameTimer.start();
 	}
 
 	@Override
 	public void hideContents() {
+		program.setScore(score);
 		program.removeAll();
 		gameTimer.stop();
 		
 		stage.getFighter().getBullet().removeAllBullets();
-//		blueEnemy.getBullet().removeAllBullets();
 		for(Blue it: stage.getBlueEnemyList()) {
 			it.getBullet().removeAllBullets();
 		}
@@ -210,11 +183,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	//TODO: This function is meant to draw all of the enemies
 	public void drawAllEnemies() {
-		
-	}
-	
-	//TODO: draws the user's current score in the top left.
-	public void drawScore() {
 		
 	}
 	
