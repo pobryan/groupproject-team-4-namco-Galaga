@@ -3,7 +3,6 @@ package starter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//comment
 
 public class StartMenu extends JFrame implements ActionListener {
     private JLabel title;
@@ -30,17 +29,14 @@ public class StartMenu extends JFrame implements ActionListener {
 
         main.add(start);
         start.setFont(new Font("Consolas",Font.BOLD, 40));
-        start.setMnemonic(KeyEvent.VK_S);
         start.setBounds(260, 200, 200, 50);
 
         main.add(help);
         help.setFont(new Font("Consolas",Font.BOLD, 40));
-        help.setMnemonic(KeyEvent.VK_H);
         help.setBounds(260, 300, 200, 50);
 
 
         main.add(exit);
-        exit.setMnemonic(KeyEvent.VK_E);
         exit.setFont(new Font("Consolas",Font.BOLD, 40));
         exit.setBounds(260, 400, 200, 50);
 
