@@ -145,7 +145,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			}
 			for(Red it: stage.getRedEnemyList()) {
 				if(it.getRedEnemyImage().isVisible()) {
-					//redEnemy.setRedTarget(fighter);
 					redVis = true;
 				}
 			}

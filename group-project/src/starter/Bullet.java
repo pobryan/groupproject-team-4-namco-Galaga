@@ -111,7 +111,6 @@ public class Bullet implements ActionListener{
 		for(int i=0; i<bullets.size(); i++) {
 			bullet= bullets.get(i);
 			GObject enemyElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);
-			
 			if(bullet.getY()<-15) {
 				program.remove(bullet);
 				bullets.remove(i);
@@ -120,14 +119,14 @@ public class Bullet implements ActionListener{
 				program.remove(bullet);
 				enemyElement.setVisible(false);
 				screen.enemyHit();
-				for(Red it: screen.getStage().getBoard().getRedEnemyList()){
-					if(enemyElement.getLocation() == it.getLocation()) {
-						screen.getStage().removeEnemyFromStage(it);
+				for(int j = 0; j < screen.getStage().getRedEnemyList().size(); j++) {
+					if(enemyElement.getX() == screen.getStage().getRedEnemyList().get(j).getX()) {
+						screen.getStage().removeRedEnemyFromStage(screen.getStage().getRedEnemyList().get(j));
 					}
 				}
-				for(Blue it: screen.getStage().getBoard().getBlueEnemyList()){
-					if(enemyElement.getLocation() == it.getLocation()) {
-						screen.getStage().removeEnemyFromStage(it);
+				for(int k= 0; k < screen.getStage().getBlueEnemyList().size(); k++) {
+					if(enemyElement.getX() == screen.getStage().getBlueEnemyList().get(k).getX()) {
+						screen.getStage().removeBlueEnemyFromStage(screen.getStage().getBlueEnemyList().get(k));
 					}
 				}
 				program.remove(enemyElement);
