@@ -109,7 +109,9 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()==KeyEvent.VK_SPACE && stage.getFighter().getFighterImage().isVisible()) {
-			stage.getFighter().shoot(program, this);
+			if(numTimes % 5 == 0) {
+				stage.getFighter().shoot(program, this);
+			}
 		}
 		else if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			stage.getFighter().moveRight();
@@ -122,6 +124,13 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		}
 	}
 	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			stage.getFighter().shoot(program, this);
+		}
+	}
+	
 	//Moves the enemy toward the Fighter(temporary)
 	public void actionPerformed(ActionEvent e) {
 		boolean blueVis = false;
@@ -130,8 +139,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			for(Blue it: stage.getBlueEnemyList()) {
 				if(it.getBlueEnemyImage().isVisible()) {
 					blueVis = true;
-					//blueEnemy.shoot(program, this);
-					//it.shoot(program, this);
 				}
 			}
 			if(blueVis == true) {
@@ -168,21 +175,6 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		numTimes++;
 		scoreTotal.setLabel(""+score);
 		GameOver();
-	}
-	
-	//TODO: draws the Galaga background
-	public void drawGalagaStars() {
-		
-	}
-	
-	public void drawEnemy() {
-		
-	}
-	
-	
-	//TODO: This function is meant to draw all of the enemies
-	public void drawAllEnemies() {
-		
 	}
 	
 	public void GameOver() {

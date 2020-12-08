@@ -69,14 +69,12 @@ public class Bullet implements ActionListener{
 	
 	//Adds fighter bullets on screen
 	public void addBullet(double x, double y, MainApplication program, Graphics screen) {
-		if(numTimes % 5 == 0) {
-			this.program=program;
-			this.screen=screen;
-			bullet= makeBullet(x,y);
-			bullets.add(bullet);
-			program.add(bullet);
-			program.add(bullet);
-		}
+		this.program=program;
+		this.screen=screen;
+		bullet= makeBullet(x,y);
+		bullets.add(bullet);
+		program.add(bullet);
+		program.add(bullet);
  	}
 	
 	//Adds enemy bullets on screen
