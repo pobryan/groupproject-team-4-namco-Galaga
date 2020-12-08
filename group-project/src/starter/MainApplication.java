@@ -15,7 +15,7 @@ public class MainApplication extends GraphicsApplication {
 	private Graphics graphics;
 	private GameOver gameOver;
 	private StartMenu start;
-//	private Stage stage;
+	private Stage stage;
 
 	public void init() {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -26,6 +26,7 @@ public class MainApplication extends GraphicsApplication {
 		graphics=new Graphics(this);
 		gameOver= new GameOver(this);
 		start= new StartMenu(this);
+		stage = new Stage(this);
 		switchToMenu();
 	}
 	
@@ -43,6 +44,10 @@ public class MainApplication extends GraphicsApplication {
 	
 	public void switchToCredits() {
 		switchToScreen(credit);
+	}
+	
+	public void switchToStage() {
+		switchToScreen(stage);
 	}
 	
 	public int getScore() {

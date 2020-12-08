@@ -51,21 +51,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		SCORE.setColor(Color.cyan);
 		SCORE.setFont(new Font("Consolas",Font.PLAIN, 15));
 
-		stage = new Stage();
+		stage = new Stage(program);
 		stage.setUpStage();
 		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 		stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-		
-		for(Red it: stage.getRedEnemyList()) {
-			it.setSize(ENTITY_SIZE, ENTITY_SIZE);
-			it.getRedEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-			it.getRedEnemyImage().setVisible(true);
-		}
-		for(Blue it: stage.getBlueEnemyList()) {
-			it.setSize(ENTITY_SIZE, ENTITY_SIZE);
-			it.getBlueEnemyImage().setSize(ENTITY_SIZE, ENTITY_SIZE);
-			it.getBlueEnemyImage().setVisible(true);
-		}
 		
 		//initializes timer
 		gameTimer = new Timer(DELAY_MS, this);
@@ -97,13 +86,13 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	@Override
 	public void hideContents() {
 		program.setScore(score);
-		program.removeAll();
 		gameTimer.stop();
 		
 		stage.getFighter().getBullet().removeAllBullets();
 		for(Blue it: stage.getBlueEnemyList()) {
 			it.getBullet().removeAllBullets();
 		}
+		program.removeAll();
 	}
 	
 	@Override
@@ -172,6 +161,15 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			stage.getFighter().getFighterImage().setVisible(true);
 			restart.setVisible(false);
 		}
+		if(stage.isStagePassed()) {
+			
+			stage = new Stage(program);
+			stage.setUpStage();
+			stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+			stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+			
+			program.switchToStage();
+		}
 		numTimes++;
 		scoreTotal.setLabel(""+score);
 		GameOver();
@@ -218,6 +216,8 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			}
 		}
 	}
+	
+	
 	
 	public Stage getStage() {
 		return stage;
