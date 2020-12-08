@@ -148,6 +148,7 @@ public class Bullet implements ActionListener{
 				fighterElement.setVisible(false);
 				screen.bulletHit();
 				screen.getStage().getFighter().setInvincible(true);
+				
 				enemyBullets.remove(i);
 			}
 		}
