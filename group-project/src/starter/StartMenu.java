@@ -35,7 +35,7 @@ public class StartMenu extends GraphicsPane implements MouseListener{
         	program.switchToCredits();
         }
         if(exit.contains(e.getX(), e.getY())){
-        	program.exit();
+        	System.exit(0);
         }
 	}
     
