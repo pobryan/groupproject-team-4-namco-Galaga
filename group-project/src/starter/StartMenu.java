@@ -12,7 +12,7 @@ public class StartMenu extends JFrame implements ActionListener {
 
     public StartMenu() {
         frame1.setSize(800,600);
-        frame1.setBackground(Color.BLACK);
+        //frame1.setBackground(Color.BLACK);
 
         Container main = frame1.getContentPane();
         main.setLayout(null);
@@ -55,27 +55,19 @@ public class StartMenu extends JFrame implements ActionListener {
     }
 
 
-    public void actionPerformed(ActionEvent e)
-    {
+    public void actionPerformed(ActionEvent e) {
         String key = e.getActionCommand();
-
-        if(key == "Start")
-        {
-            frame1.dispose();
-            
+        if(key == "Start") {
+            frame1.dispose();  
         }
-
-        else if(key == "Help")
-        {
-
+        else if(key == "Help") {
         }
-
-        else
-            System.exit(0);
+        else {
+        	System.exit(0);
+        }
     }
 
-    public static void main(String[]args)
-    {
+    public static void main(String[]args) {
         new StartMenu();
     }
 
