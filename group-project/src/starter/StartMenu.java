@@ -3,6 +3,7 @@ package starter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+//comment
 
 public class StartMenu extends JFrame implements ActionListener {
     private JLabel title;
