@@ -1,71 +1,68 @@
 package starter;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class StartMenu extends JFrame implements ActionListener {
-    private JLabel title;
-    private JButton start, help, exit;
+import acm.graphics.GLabel;
 
-    static JFrame frame1 = new JFrame();
+public class StartMenu extends GraphicsPane implements MouseListener{
+    private MainApplication program;
+	
+	private GLabel title;
+    private GButton start, credits, exit;
 
-    public StartMenu() {
-        frame1.setSize(800,600);
-        //frame1.setBackground(Color.BLACK);
-
-        Container main = frame1.getContentPane();
-        main.setLayout(null);
-
-        title = new JLabel("Galaga");
-        start = new JButton("Start");
-        help = new JButton("Help");
-        exit = new JButton("Exit");
-
-
-        main.add(title);
+    StartMenu(MainApplication program) {
+        this.program=program;
+    	
+        title = new GLabel("Galaga");
+        title.setColor(Color.cyan);
         title.setFont(new Font("Consolas",Font.BOLD, 100));
-        title.setBounds(200, 50, 500, 100);
-
-        main.add(start);
-        start.setFont(new Font("Consolas",Font.BOLD, 40));
-        start.setBounds(260, 200, 200, 50);
-
-        main.add(help);
-        help.setFont(new Font("Consolas",Font.BOLD, 40));
-        help.setBounds(260, 300, 200, 50);
-
-
-        main.add(exit);
-        exit.setFont(new Font("Consolas",Font.BOLD, 40));
-        exit.setBounds(260, 400, 200, 50);
-
-
-        start.addActionListener(this);
-        help.addActionListener(this);
-        exit.addActionListener(this);
-
-        frame1.setVisible(true);
-        frame1.setResizable(false);
-
-
+        title.setLocation(220, 125);
+        
+        start = new GButton("Start",270, 200, 200, 50);
+        credits = new GButton("Credits", 270, 300, 200, 50);
+        exit = new GButton("Exit", 270, 400, 200, 50);
     }
+    
+    @Override
+	public void mousePressed(MouseEvent e) {
+    	if(start.contains(e.getX(), e.getY())) {
+           program.switchToGraphics();
+        }
+        if(credits.contains(e.getX(), e.getY())) {
+        	program.switchToCredits();
+        }
+        if(exit.contains(e.getX(), e.getY())){
+        	program.exit();
+        }
+	}
+    
+	@Override
+	public void showContents() {
+		program.setBackground(Color.BLACK);
+		program.add(title);
+		program.add(start);
+		program.add(credits);
+		program.add(exit);
+	}
 
 
-    public void actionPerformed(ActionEvent e) {
-        String key = e.getActionCommand();
-        if(key == "Start") {
-            frame1.dispose();  
-        }
-        else if(key == "Help") {
-        }
-        else {
-        	System.exit(0);
-        }
-    }
+	@Override
+	public void hideContents() {
+		program.removeAll();
+		
+	}
 
-    public static void main(String[]args) {
-        new StartMenu();
-    }
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		
+	}
 
 }

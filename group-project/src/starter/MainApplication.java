@@ -8,14 +8,13 @@ public class MainApplication extends GraphicsApplication {
 	public static final int BUTTON_HEIGHT = 120;
 	public static final int BUTTON_WIDTH = 50;
 	public static Font titleFont = new Font("Serif", Font.BOLD, 48);
-//	public static final String MUSIC_FOLDER = "sounds";
-//	private static final String[] SOUND_FILES = { "r2d2.mp3", "somethinlikethis.mp3" };
 
 	
 	private int finalScore;
-	private Menu menu;
+	private Credits credit;
 	private Graphics graphics;
 	private GameOver gameOver;
+	private StartMenu start;
 //	private Stage stage;
 
 	public void init() {
@@ -23,10 +22,11 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void run() {
-		menu = new Menu(this);
+		credit= new Credits(this);
 		graphics=new Graphics(this);
 		gameOver= new GameOver(this);
-		switchToGraphics();
+		start= new StartMenu(this);
+		switchToMenu();
 	}
 	
 	public void switchToGraphics() {
@@ -34,11 +34,15 @@ public class MainApplication extends GraphicsApplication {
 	}
 
 	public void switchToMenu() {
-		switchToScreen(menu);
+		switchToScreen(start);
 	}
 	
 	public void switchToGameOver() {
 		switchToScreen(gameOver);
+	}
+	
+	public void switchToCredits() {
+		switchToScreen(credit);
 	}
 	
 	public int getScore() {
