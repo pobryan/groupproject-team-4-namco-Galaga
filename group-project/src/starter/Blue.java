@@ -29,6 +29,7 @@ public class Blue extends enemy {
 		setSpaceToAttack(new space(0, 0));
 		setSpaceToRetreat(new space(0, 0));
 		shoot=new Bullet(0,0,4, bulletImage);
+		this.setEnemyType(enemyType.BLUE); 
 	}
 	
 	Blue(int x, int y, Fighter target){
@@ -37,6 +38,7 @@ public class Blue extends enemy {
 		blueEnemyImage = new GImage("Blue.png", x, y);
 		spaceToRetreat = new space(x, y);
 		shoot=new Bullet(0,0,4, bulletImage);
+		this.setEnemyType(enemyType.BLUE); 
 	}
 	
 	public void setBlueEnemyPosition(GImage i) {

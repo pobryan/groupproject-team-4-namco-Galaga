@@ -19,6 +19,7 @@ public class Red extends enemy{
 		redEnemyImage = new GImage("Red.png", 0, 0);
 		redEnemyImage.setLocation(0, 0);
 		attacking = false;
+		this.setEnemyType(enemyType.RED); 
 	}
 	
 	Red(int x, int y, Fighter target){
@@ -31,6 +32,7 @@ public class Red extends enemy{
 		attacking = false;
 //		degToAttack = calculateDegToAttack();
 //		degToRetreat = calculateDegToRetreat();
+		this.setEnemyType(enemyType.RED); 
 	}
 	
 	// methods

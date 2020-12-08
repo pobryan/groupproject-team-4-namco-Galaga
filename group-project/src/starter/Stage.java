@@ -30,6 +30,14 @@ public class Stage {
 		board.addBlueEnemyToBoard(BLUE_ENEMY_X, BLUE_ENEMY_Y);
 		board.addBlueEnemyToBoard(BLUE_ENEMY_X+ENTITY_SIZE+10, BLUE_ENEMY_Y);
 	}
+	public void removeEnemyFromStage(enemy e) {
+		if(e.getEnemyType() == enemyType.RED) {
+			board.getRedEnemyList().remove(e);
+		}
+		else if(e.getEnemyType() == enemyType.BLUE) {
+			board.getBlueEnemyList().remove(e);
+		}
+	}
 	
 	public enemy getEnemyLocation() {
 		return null;

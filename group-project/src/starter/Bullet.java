@@ -120,6 +120,16 @@ public class Bullet implements ActionListener{
 				program.remove(bullet);
 				enemyElement.setVisible(false);
 				screen.enemyHit();
+				for(Red it: screen.getStage().getBoard().getRedEnemyList()){
+					if(enemyElement.getLocation() == it.getLocation()) {
+						screen.getStage().removeEnemyFromStage(it);
+					}
+				}
+				for(Blue it: screen.getStage().getBoard().getBlueEnemyList()){
+					if(enemyElement.getLocation() == it.getLocation()) {
+						screen.getStage().removeEnemyFromStage(it);
+					}
+				}
 				program.remove(enemyElement);
 				bullets.remove(i);
 			}

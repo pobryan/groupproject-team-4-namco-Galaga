@@ -35,6 +35,18 @@ public class Board {
 		blueEnemyList.add(enemyToAdd);
 	}
 	
+	public void removeEnemyFromBoard(enemy e) {
+		if(e.getEnemyType() == enemyType.RED) {
+			redEnemyList.remove(e);
+		}
+		else if(e.getEnemyType() == enemyType.BLUE) {
+			blueEnemyList.remove(e);
+		}
+	}
+	public void removeBlueEnemyFromBoard(Blue e) {
+		blueEnemyList.remove(e);
+	}
+	
 	public void redEnemiesAttack() {
 		for(Red it: redEnemyList) {
 			it.attack();
