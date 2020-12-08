@@ -127,6 +127,7 @@ public class Bullet implements ActionListener{
 						screen.getStage().removeBlueEnemyFromStage(screen.getStage().getBlueEnemyList().get(k));
 					}
 				}
+				
 				program.remove(enemyElement);
 				bullets.remove(i);
 			}
@@ -156,6 +157,14 @@ public class Bullet implements ActionListener{
 	
 	//removes all bullets on screen
 	public void removeAllBullets() {
+		for(int i=0; i<bullets.size(); i++) {
+            bullets.remove(i);
+            program.remove(bullets.get(i));
+        }
+        for(int i=0; i<enemyBullets.size(); i++) {
+            enemyBullets.remove(i);
+            program.remove(enemyBullets.get(i));
+        }
 		bullets.clear();
 		enemyBullets.clear();
 	}

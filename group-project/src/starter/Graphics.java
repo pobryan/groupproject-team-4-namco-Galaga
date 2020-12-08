@@ -51,10 +51,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		SCORE.setColor(Color.cyan);
 		SCORE.setFont(new Font("Consolas",Font.PLAIN, 15));
 
-		stage = new Stage(program);
-		stage.setUpStage();
-		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
-		stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+//		stage = new Stage(program);
+//		stage.setUpStage();
+//		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+//		stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 		
 		//initializes timer
 		gameTimer = new Timer(DELAY_MS, this);
@@ -63,6 +63,10 @@ public class Graphics extends GraphicsPane implements ActionListener{
 
 	@Override
 	public void showContents() {
+		stage = new Stage(program);
+		stage.setUpStage();
+		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 		program.setBackground(Color.black);
 		program.add(restart);
 		program.add(scoreTotal);
@@ -115,7 +119,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+		if(e.getKeyCode()==KeyEvent.VK_SPACE && stage.getFighter().getFighterImage().isVisible()) {
 			stage.getFighter().shoot(program, this);
 		}
 	}

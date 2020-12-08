@@ -111,9 +111,10 @@ public class Stage extends GraphicsPane implements ActionListener{
 	@Override
 	public void showContents() {
 		// TODO Auto-generated method stub
-		GLabel newStage = new GLabel("New Stage", PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
+		GLabel newStage = new GLabel("New Stage", -50 + PROGRAM_WIDTH/2, PROGRAM_HEIGHT/2);
 		newStage.setColor(Color.white);
 		newStage.setFont(new Font("Consolas",Font.BOLD, 30));
+		program.add(newStage);
 		stageTimer.start();
 	}
 
@@ -122,12 +123,13 @@ public class Stage extends GraphicsPane implements ActionListener{
 		// TODO Auto-generated method stub
 		program.removeAll();
 		stageTimer.stop();
+		numTimes = 0;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		if(numTimes == 10) {
+		if(numTimes == 50) {
 			program.switchToGraphics();
 		}
 		
