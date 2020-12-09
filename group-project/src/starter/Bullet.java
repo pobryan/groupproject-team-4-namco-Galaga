@@ -161,13 +161,19 @@ public class Bullet implements ActionListener{
 	//removes all bullets on screen
 	public void removeAllBullets() {
 		for(int i=0; i<bullets.size(); i++) {
-            bullets.remove(0);
-            program.remove(bullets.get(0));
+			if(bullets.size() == 0) {}
+			else {
+				bullets.remove(0);
+				program.remove(bullets.get(0));
+			}
         }
 		//out of bounds
         for(int i=0; i<enemyBullets.size(); i++) {
-            enemyBullets.remove(0);
-            program.remove(enemyBullets.get(0));
+        	if(enemyBullets.size() == 0) {}
+        	else {
+        		enemyBullets.remove(0);
+        		program.remove(enemyBullets.get(0));
+        	}
         }
 		bullets.clear();
 		enemyBullets.clear();

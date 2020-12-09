@@ -166,6 +166,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 				invincibleClock = 0;
 			}
 			lives = stage.getFighter().getLives().size();
+
 		}	
 		else if(restart.isVisible() && numTimes % 100 == 0) {
 			stage.getFighter().getFighterImage().setVisible(true);
@@ -187,6 +188,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	public void GameOver() {
 		if(stage.getBoard().getFighter().isLivesEmpty()) {
+			lives = 3;
 			program.switchToGameOver();
 		}
 	}
