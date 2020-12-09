@@ -166,8 +166,8 @@ public class Bullet implements ActionListener{
 				
 				}
 				else {
-					bullets.remove(0);
 					program.remove(bullets.get(0));
+					bullets.remove(0);
 				}
 			}
 		}
@@ -176,8 +176,8 @@ public class Bullet implements ActionListener{
 			for(int i=0; i<enemyBullets.size(); i++) {
         		if(enemyBullets.size() == 0) {}
         		else {
-        			enemyBullets.remove(0);
         			program.remove(enemyBullets.get(0));
+        			enemyBullets.remove(0);
         		}
         	}
 			bullets.clear();
