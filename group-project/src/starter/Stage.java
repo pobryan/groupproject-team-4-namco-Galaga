@@ -33,8 +33,8 @@ public class Stage extends GraphicsPane implements ActionListener{
 		stageTimer = new Timer(DELAY_MS, this);
 	}
 	
-	public void setUpStage() {
-		board.addFighterToBoard();
+	public void setUpStage(int i) {
+		board.addFighterToBoard(i);
 		board.addRedEnemyToBoard(RED_ENEMY_X-ENTITY_SIZE-200, RED_ENEMY_Y);
 		board.addRedEnemyToBoard(RED_ENEMY_X, RED_ENEMY_Y);
 		board.addRedEnemyToBoard(RED_ENEMY_X+ENTITY_SIZE+200, RED_ENEMY_Y);

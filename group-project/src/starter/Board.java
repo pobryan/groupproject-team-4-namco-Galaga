@@ -19,8 +19,8 @@ public class Board {
 		blueEnemyList = new ArrayList<Blue>();
 	}
 	//methods
-	public void addFighterToBoard() {
-		Fighter fighterToAdd = new Fighter(FIGHTER_X, FIGHTER_Y, 3);
+	public void addFighterToBoard(int i) {
+		Fighter fighterToAdd = new Fighter(FIGHTER_X, FIGHTER_Y, i);
 		fighter = fighterToAdd;
 		fighter.getFighterImage().setLocation(fighter.getX(), fighter.getY());
 	}

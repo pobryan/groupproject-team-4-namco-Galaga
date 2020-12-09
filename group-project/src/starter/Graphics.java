@@ -34,6 +34,8 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	
 	private Stage stage;
 	
+	private int lives = 3;
+	
 //Constructor
 	public Graphics(MainApplication app) {
 		this.program=app;
@@ -64,9 +66,12 @@ public class Graphics extends GraphicsPane implements ActionListener{
 	@Override
 	public void showContents() {
 		stage = new Stage(program);
-		stage.setUpStage();
+		stage.setUpStage(lives);
 		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 		stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
+		/*if(showTimes > 1) {
+			stage.getFighter().setLives(lives);
+		}*/
 		program.setBackground(Color.black);
 		program.add(restart);
 		program.add(scoreTotal);
@@ -160,6 +165,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 				stage.getFighter().setInvincible(false);
 				invincibleClock = 0;
 			}
+			lives = stage.getFighter().getLives().size();
 		}	
 		else if(restart.isVisible() && numTimes % 100 == 0) {
 			stage.getFighter().getFighterImage().setVisible(true);
@@ -168,7 +174,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		if(stage.isStagePassed()) {
 			
 			stage = new Stage(program);
-			stage.setUpStage();
+			stage.setUpStage(lives);
 			stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 			stage.getFighter().getFighterImage().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
 			
@@ -203,7 +209,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 		stage.getFighter().loseLife();
 		
 		restart.setVisible(true);
-		stage.getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+		stage.getFighter().setFighterPosition(FIGHTER_X, FIGHTER_Y);
 	}
 	
 	public void fighterHit() {
@@ -215,7 +221,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 				
 				
 				restart.setVisible(true);
-				stage.getFighter().setFighterPosition(FIGHTER_X-100, FIGHTER_Y);
+				stage.getFighter().setFighterPosition(FIGHTER_X, FIGHTER_Y);
 				stage.getFighter().setInvincible(true);
 			}
 		}
