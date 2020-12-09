@@ -122,7 +122,7 @@ public class Fighter extends GRectangle{
 		if (fighterImage.getX() - 9 < 0)
 			fighterImage.move(0, 0);
 		else
-			fighterImage.move(-5, 0);
+			fighterImage.move(-15, 0);
 			this.setLocation(fighterImage.getX(), fighterImage.getY());
 	}
 	//added borders
@@ -130,7 +130,7 @@ public class Fighter extends GRectangle{
 		if (fighterImage.getX() + 55 > PROGRAM_WIDTH)
 			fighterImage.move(0, 0);
 		else
-			fighterImage.move(5, 0);
+			fighterImage.move(15, 0);
 			this.setLocation(fighterImage.getX(), fighterImage.getY());
 	}
 }

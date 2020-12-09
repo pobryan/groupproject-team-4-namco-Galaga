@@ -106,7 +106,9 @@ public class Bullet implements ActionListener{
 	
 	//Remove fighter bullet from bullets if it hits enemy/fighter or if it goes off screen
 	public void removeBullet() {
+		int sizeBefore;
 		for(int i=0; i<bullets.size(); i++) {
+			sizeBefore = bullets.size();
 			bullet= bullets.get(i);
 			GObject enemyElement= program.getElementAt(bullet.getX()+(WIDTH/2), bullet.getY()-1);
 			if(bullet.getY()<-15) {
@@ -130,6 +132,7 @@ public class Bullet implements ActionListener{
 				
 				program.remove(enemyElement);
 				bullets.remove(i);
+				
 			}
 		}
 	}
@@ -158,12 +161,13 @@ public class Bullet implements ActionListener{
 	//removes all bullets on screen
 	public void removeAllBullets() {
 		for(int i=0; i<bullets.size(); i++) {
-            bullets.remove(i);
-            program.remove(bullets.get(i));
+            bullets.remove(0);
+            program.remove(bullets.get(0));
         }
+		//out of bounds
         for(int i=0; i<enemyBullets.size(); i++) {
-            enemyBullets.remove(i);
-            program.remove(enemyBullets.get(i));
+            enemyBullets.remove(0);
+            program.remove(enemyBullets.get(0));
         }
 		bullets.clear();
 		enemyBullets.clear();
