@@ -162,7 +162,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 			if(stage.getFighter().isInvincible()) {
 				invincibleClock++;
 			}
-			if(invincibleClock == 175) {
+			if(invincibleClock == 110) {
 				stage.getFighter().setInvincible(false);
 				invincibleClock = 0;
 			}
