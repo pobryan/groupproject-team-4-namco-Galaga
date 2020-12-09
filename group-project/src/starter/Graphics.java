@@ -65,6 +65,7 @@ public class Graphics extends GraphicsPane implements ActionListener{
 
 	@Override
 	public void showContents() {
+		score=program.getScore();
 		stage = new Stage(program);
 		stage.setUpStage(lives);
 		stage.getFighter().setSize(ENTITY_SIZE+1, ENTITY_SIZE);
