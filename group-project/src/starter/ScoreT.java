@@ -17,27 +17,27 @@ public class ScoreT {
 	      System.out.println(score);
 	      temp = score;		//transition for string -> integer conversion
 	    }	
-	    reader.close();
+	    reader.close();		//closes
 	  } catch (IOException e) {
 	    e.printStackTrace();
 	  }
 	
     try{
-        int number = Integer.parseInt(temp);
-        itemp = number;
+        int number = Integer.parseInt(temp);	//convert to integer
+        itemp = number;							//set temporary variable
     }
     catch (NumberFormatException ex){
         ex.printStackTrace();
     }
-    if (newScore > itemp) {
+    if (newScore > itemp) {						//check condition
     	try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("highscore.txt"));
-            String s=String.valueOf(newScore);
+            BufferedWriter writer = new BufferedWriter(new FileWriter("highscore.txt"));	
+            String s=String.valueOf(newScore);							//convert to string
             System.out.printf("New High Score is: ");
             System.out.println(s);
-            writer.write(s);
+            writer.write(s);											//write file
             
-            writer.close();
+            writer.close();											//close
           } catch (IOException e) {
             e.printStackTrace();
           }
