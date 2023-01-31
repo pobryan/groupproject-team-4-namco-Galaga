@@ -21,3 +21,12 @@ When player's number of lives reach 0:
     write in new score
   text file is closed
   
+  -----------------------------------------------------
+  After much trying over the weekend, I was unable to find a way to get the old code working. Whether it was problems with my old computer and one drive, old problems in
+  the code, or problems within eclipse and creating the right runtime enviornment, I could not solve it. Instead I created the solution in a seperate java file. This
+  feature would normally be easily implemented as well, as it is somewhat isolated with no features depending on it. I added 2 files named 
+  'ScoreT.java' and 'Highscore.txt'. However the .txt file only for show, as the 'ScoreT.java' file will create a file to save data within. Below is a screenshot of the 
+  code working within eclipse. 
+  
+  ![image](https://user-images.githubusercontent.com/72995425/215685833-dfefe0e0-d17a-410d-81b3-71816c9a4c62.png)
+
